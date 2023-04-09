@@ -1,0 +1,17 @@
+:local(.celda) {
+    height: 75px;
+}
+
+:local(.celda):nth-child(even) {
+    background-color: #caab7c;
+}
+
+:local(.celda):nth-child(odd) {
+    background-color: #96743d;
+}
+
+/* 
+:local(.celda) {
+    background-color: #ebecd0;
+    background-color: #779556;
+} */

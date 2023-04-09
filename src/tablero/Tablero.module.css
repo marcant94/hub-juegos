@@ -1,0 +1,28 @@
+table:local(.tablero) {
+    border: 1px solid black;
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
+}
+
+:local(.tablaFlex) {
+    margin: 0 auto;
+    width: fit-content;
+
+    display: grid;
+    grid-template-columns: repeat(9, 75px);
+    grid-gap: 0px;
+}
+
+:local(.celdaFila) {
+    text-align: right;
+    align-self: center;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+:local(.celdaColumna) {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
