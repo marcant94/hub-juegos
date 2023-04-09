@@ -1,6 +1,6 @@
 /* generate-build-version.js */
 import fs from "fs";
-import packageJson from "../../../package.json" assert { type: "json" };
+import packageJson from "../../package.json" assert { type: "json" };
 
 const jsonData = {
     version: packageJson.version
