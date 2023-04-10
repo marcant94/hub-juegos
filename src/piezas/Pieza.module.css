@@ -10,5 +10,5 @@
 
 :local(.blanca),
 :local(.negra) {
-    cursor: pointer;
+    pointer-events: none;
 }

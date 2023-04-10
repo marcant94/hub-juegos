@@ -13,6 +13,10 @@
     background-color: #96743d;
 }
 
+:local(.celdaConFicha) {
+    cursor: pointer;
+}
+
 /* 
 :local(.celda) {
     background-color: #ebecd0;
