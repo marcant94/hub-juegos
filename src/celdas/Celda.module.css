@@ -95,7 +95,8 @@
 :local(.celdaConFicha):local(.puedeLlegar) {
     /* Es atacable */
     cursor: pointer;
-    background-color: #edbec7 !important;
+    /* background-color: #edbec7 !important; */
+    background-color: #c69aad !important;
 }
 
 :local(.puedeLlegar):not(:local(.celdaConFicha)) {

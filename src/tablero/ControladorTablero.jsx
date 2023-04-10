@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import estilos from "./Tablero.module.css";
 import Celda from "../celdas/Celda";
+import { clonar } from "../utilidades";
 
 function seleccionarFicha(celda, activo, setActivo, evento) {
     if (activo.fila === celda.fila && activo.columna === celda.columna) {
@@ -11,6 +12,50 @@ function seleccionarFicha(celda, activo, setActivo, evento) {
     }
 }
 
+function moverFicha(
+    fichaOrigen,
+    fichaDestino = undefined,
+    celdaDestino,
+    setActivo,
+    setTurno,
+    fichas,
+    setFichas
+) {
+    // let nuevasFichas = clonar(fichas);
+    let nuevasFichas = fichas.filter((ficha, indice) => {
+        // Eliminamos la ficha origen
+        if (
+            ficha.fila === fichaOrigen.fila &&
+            ficha.columna === fichaOrigen.columna
+        ) {
+            return;
+        }
+
+        // Si habia una ficha en la celda destino, ha sido comida
+        if (
+            ficha.fila === celdaDestino.fila &&
+            ficha.columna === celdaDestino.columna
+        ) {
+            return;
+        }
+
+        return ficha;
+    });
+
+    let nuevaFicha = clonar(fichaOrigen);
+
+    nuevaFicha.movimientos++;
+    nuevaFicha.fila = celdaDestino.fila;
+    nuevaFicha.columna = celdaDestino.columna;
+
+    nuevasFichas.push(nuevaFicha);
+
+    setActivo({});
+    setTurno(fichaOrigen.color === "B" ? "N" : "B");
+
+    setFichas(nuevasFichas);
+}
+
 function desseleccionarFicha(setActivo) {
     setActivo({});
 }
@@ -18,6 +63,7 @@ function desseleccionarFicha(setActivo) {
 function pintarTablero(
     tableroFichas,
     fichas,
+    setFichas,
     activo,
     setActivo,
     turno,
@@ -52,7 +98,8 @@ function pintarTablero(
                 // Comprobamos si la ficha se puede mover hasta aqui
                 puedeLlegar = fichaActiva.pieza.puedeMoverse(
                     celda,
-                    fichaActiva
+                    fichaActiva,
+                    fichas
                 );
             }
 
@@ -66,6 +113,17 @@ function pintarTablero(
                         celda,
                         activo,
                         setActivo
+                    );
+                } else if (puedeLlegar) {
+                    funcionPulsar = moverFicha.bind(
+                        this,
+                        fichaActiva,
+                        fichaEnEstaCelda,
+                        celda,
+                        setActivo,
+                        setTurno,
+                        fichas,
+                        setFichas
                     );
                 }
 
@@ -82,8 +140,17 @@ function pintarTablero(
                 );
             } else {
                 let funcionPulsar = undefined;
-                if (hayActivo) {
-                    // Permitimos pulsar aqui si la ficha seleccionada puede moverse hasta aqui
+                if (puedeLlegar) {
+                    funcionPulsar = moverFicha.bind(
+                        this,
+                        fichaActiva,
+                        undefined,
+                        celda,
+                        setActivo,
+                        setTurno,
+                        fichas,
+                        setFichas
+                    );
                 }
 
                 return (
@@ -103,7 +170,6 @@ function pintarTablero(
 
 const ControladorTablero = ({
     tableroFichas,
-    setTableroFichas,
     fichas,
     setFichas,
     turno,
@@ -116,6 +182,7 @@ const ControladorTablero = ({
             {pintarTablero(
                 tableroFichas,
                 fichas,
+                setFichas,
                 activo,
                 setActivo,
                 turno,

@@ -232,6 +232,10 @@ const Tablero = (props) => {
 
     return (
         <div>
+            {/* Menu seleccion colores de tablero y de fichas */}
+            {/* Mostrar turno */}
+            {/* Mostrar fichas comidas */}
+            {/* Añadir transiciones cortas al mover las fichas */}
             <br />
             <ControladorTablero
                 key="elcontrolador"
