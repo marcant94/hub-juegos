@@ -18,6 +18,10 @@
     background-color: #b1a7fc !important;
 }
 
+:local(.celdaAtacable) {
+    background-color: #edbec7 !important;
+}
+
 :local(.filaPar):nth-child(even),
 :local(.filaImpar):nth-child(odd) {
     background-color: #b7c0d8;

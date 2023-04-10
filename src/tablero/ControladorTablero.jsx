@@ -24,6 +24,16 @@ function pintarTablero(
     setTurno
 ) {
     let indice = -1;
+    let hayActivo = Object.keys(activo).length;
+    let fichaActiva = undefined;
+
+    if (hayActivo) {
+        fichaActiva = fichas.find(
+            (ficha) =>
+                ficha.props.fila === activo.fila &&
+                ficha.props.columna === activo.columna
+        );
+    }
 
     return tableroFichas.map((celda) => {
         indice++;
@@ -37,14 +47,20 @@ function pintarTablero(
                     ficha.props.columna === celda.columna
             );
 
+            let celdaSeleccionada =
+                celda.fila === activo.fila && celda.columna === activo.columna;
+            if (hayActivo && !celdaSeleccionada) {
+                // Comprobamos si la ficha se puede mover hasta aqui
+                fichaActiva.type.puedeMoverse(
+                    celda.fila,
+                    celda.columna,
+                    fichaActiva.props.fila,
+                    fichaActiva.props.columna
+                );
+            }
+
             if (fichaEnEstaCelda) {
-                let celdaSeleccionada =
-                    celda.fila === activo.fila &&
-                    celda.columna === activo.columna;
-
                 let funcionPulsar = undefined;
-
-                let hayActivo = Object.keys(activo).length;
                 if (hayActivo && celdaSeleccionada) {
                     funcionPulsar = desseleccionarFicha.bind(this, setActivo);
                 } else if (fichaEnEstaCelda.props.color === turno) {
@@ -67,14 +83,14 @@ function pintarTablero(
                     />
                 );
             } else {
+                let funcionPulsar = undefined;
+                if (hayActivo) {
+                    // Permitimos pulsar aqui si la ficha seleccionada puede moverse hasta aqui
+                }
+
                 return (
                     <Celda
-                        // pulsarCelda={seleccionarFicha.bind(
-                        //     this,
-                        //     celda,
-                        //     activo,
-                        //     setActivo
-                        // )}
+                        pulsarCelda={funcionPulsar}
                         key={indice++}
                         fila={celda.fila}
                         columna={celda.columna}

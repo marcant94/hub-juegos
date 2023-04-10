@@ -36,7 +36,7 @@ function generarTableroVacio() {
             </div>
         );
 
-        for (let columna = 0; columna <= 7; columna++) {
+        for (let columna = 1; columna <= 8; columna++) {
             let celda = {
                 fila: fila,
                 columna: columna,
@@ -74,44 +74,44 @@ function generarFichas() {
     let fichasIniciales = [];
 
     // Generamos los peones blancos
-    for (let index = 0; index < 8; index++) {
+    for (let index = 1; index <= 8; index++) {
         let peonBlanco = <Peon fila={2} columna={index} color="B" />;
         fichasIniciales.push(peonBlanco);
     }
 
     // Generamos los peones negros
-    for (let index = 0; index < 8; index++) {
+    for (let index = 1; index <= 8; index++) {
         let peonNegro = <Peon fila={7} columna={index} color="N" />;
         fichasIniciales.push(peonNegro);
     }
 
     // Generamos las torres
-    fichasIniciales.push(<Torre fila={8} columna={0} color="N" />);
-    fichasIniciales.push(<Torre fila={8} columna={7} color="N" />);
+    fichasIniciales.push(<Torre fila={8} columna={1} color="N" />);
+    fichasIniciales.push(<Torre fila={8} columna={8} color="N" />);
 
-    fichasIniciales.push(<Torre fila={1} columna={0} color="B" />);
-    fichasIniciales.push(<Torre fila={1} columna={7} color="B" />);
+    fichasIniciales.push(<Torre fila={1} columna={1} color="B" />);
+    fichasIniciales.push(<Torre fila={1} columna={8} color="B" />);
 
     // Generamos los caballos
-    fichasIniciales.push(<Caballo fila={8} columna={1} color="N" />);
-    fichasIniciales.push(<Caballo fila={8} columna={6} color="N" />);
+    fichasIniciales.push(<Caballo fila={8} columna={2} color="N" />);
+    fichasIniciales.push(<Caballo fila={8} columna={7} color="N" />);
 
-    fichasIniciales.push(<Caballo fila={1} columna={1} color="B" />);
-    fichasIniciales.push(<Caballo fila={1} columna={6} color="B" />);
+    fichasIniciales.push(<Caballo fila={1} columna={2} color="B" />);
+    fichasIniciales.push(<Caballo fila={1} columna={7} color="B" />);
 
     // Generamos los alfiles
-    fichasIniciales.push(<Alfil fila={8} columna={2} color="N" />);
-    fichasIniciales.push(<Alfil fila={8} columna={5} color="N" />);
+    fichasIniciales.push(<Alfil fila={8} columna={3} color="N" />);
+    fichasIniciales.push(<Alfil fila={8} columna={6} color="N" />);
 
-    fichasIniciales.push(<Alfil fila={1} columna={2} color="B" />);
-    fichasIniciales.push(<Alfil fila={1} columna={5} color="B" />);
+    fichasIniciales.push(<Alfil fila={1} columna={3} color="B" />);
+    fichasIniciales.push(<Alfil fila={1} columna={6} color="B" />);
 
     // Generamos los reyes y reinas
-    fichasIniciales.push(<Rey fila={8} columna={4} color="N" />);
-    fichasIniciales.push(<Reina fila={8} columna={3} color="N" />);
+    fichasIniciales.push(<Rey fila={8} columna={5} color="N" />);
+    fichasIniciales.push(<Reina fila={8} columna={4} color="N" />);
 
-    fichasIniciales.push(<Rey fila={1} columna={4} color="B" />);
-    fichasIniciales.push(<Reina fila={1} columna={3} color="B" />);
+    fichasIniciales.push(<Rey fila={1} columna={5} color="B" />);
+    fichasIniciales.push(<Reina fila={1} columna={4} color="B" />);
 
     return fichasIniciales;
 }
