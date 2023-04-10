@@ -6,7 +6,7 @@ const Torre = ({ fila, columna, color }) => {
 };
 
 Torre.puedeMoverse = function(celda, fichaActiva) {
-    return true;
+    return false;
 };
 
 export default Torre;

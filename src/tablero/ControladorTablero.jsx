@@ -46,9 +46,9 @@ function pintarTablero(
             );
             let puedeLlegar = false;
 
-            let celdaSeleccionada =
+            let celdaEstaSeleccionada =
                 celda.fila === activo.fila && celda.columna === activo.columna;
-            if (hayActivo && !celdaSeleccionada) {
+            if (hayActivo && !celdaEstaSeleccionada) {
                 // Comprobamos si la ficha se puede mover hasta aqui
                 puedeLlegar = fichaActiva.pieza.puedeMoverse(
                     celda,
@@ -58,7 +58,7 @@ function pintarTablero(
 
             if (fichaEnEstaCelda) {
                 let funcionPulsar = undefined;
-                if (hayActivo && celdaSeleccionada) {
+                if (hayActivo && celdaEstaSeleccionada) {
                     funcionPulsar = desseleccionarFicha.bind(this, setActivo);
                 } else if (fichaEnEstaCelda.color === turno) {
                     funcionPulsar = seleccionarFicha.bind(
@@ -77,7 +77,7 @@ function pintarTablero(
                         fila={celda.fila}
                         columna={celda.columna}
                         ficha={fichaEnEstaCelda}
-                        seleccionado={celdaSeleccionada}
+                        seleccionado={celdaEstaSeleccionada}
                     />
                 );
             } else {

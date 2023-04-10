@@ -6,7 +6,7 @@ const Reina = ({ fila, columna, color }) => {
 };
 
 Reina.puedeMoverse = function(celda, fichaActiva) {
-    return true;
+    return false;
 };
 
 export default Reina;

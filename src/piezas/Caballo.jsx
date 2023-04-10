@@ -6,7 +6,7 @@ const Caballo = ({ fila, columna, color }) => {
 };
 
 Caballo.puedeMoverse = function(celda, fichaActiva) {
-    return true;
+    return false;
 };
 
 export default Caballo;

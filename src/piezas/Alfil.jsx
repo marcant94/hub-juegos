@@ -6,7 +6,7 @@ const Alfil = ({ fila, columna, color }) => {
 };
 
 Alfil.puedeMoverse = function(celda, fichaActiva) {
-    return true;
+    return false;
 };
 
 export default Alfil;

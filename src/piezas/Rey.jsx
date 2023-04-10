@@ -6,7 +6,7 @@ const Rey = ({ fila, columna, color }) => {
 };
 
 Rey.puedeMoverse = function(celda, fichaActiva) {
-    return true;
+    return false;
 };
 
 export default Rey;

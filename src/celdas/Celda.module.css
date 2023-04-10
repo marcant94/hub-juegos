@@ -56,6 +56,17 @@
     background-color: #edbec7 !important;
 }
 
-:local(.puedeLlegar):not(:local(.celdaConFicha)) {
-    background-color: yellow;
+:local(.puedeLlegar):not(:local(.celdaConFicha))::before {
+    content: "";
+    height: 35%;
+    width: 35%;
+    background-color: #7b61ff;
+    border-radius: 50%;
+    margin: auto;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
