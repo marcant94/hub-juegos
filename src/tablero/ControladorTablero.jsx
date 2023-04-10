@@ -30,8 +30,7 @@ function pintarTablero(
     if (hayActivo) {
         fichaActiva = fichas.find(
             (ficha) =>
-                ficha.fila === activo.fila &&
-                ficha.columna === activo.columna
+                ficha.fila === activo.fila && ficha.columna === activo.columna
         );
     }
 
@@ -43,19 +42,17 @@ function pintarTablero(
         } else {
             let fichaEnEstaCelda = fichas.find(
                 (ficha) =>
-                    ficha.fila === celda.fila &&
-                    ficha.columna === celda.columna
+                    ficha.fila === celda.fila && ficha.columna === celda.columna
             );
+            let puedeLlegar = false;
 
             let celdaSeleccionada =
                 celda.fila === activo.fila && celda.columna === activo.columna;
             if (hayActivo && !celdaSeleccionada) {
                 // Comprobamos si la ficha se puede mover hasta aqui
-                fichaActiva.type.puedeMoverse(
-                    celda.fila,
-                    celda.columna,
-                    fichaActiva.fila,
-                    fichaActiva.columna
+                puedeLlegar = fichaActiva.pieza.puedeMoverse(
+                    celda,
+                    fichaActiva
                 );
             }
 
@@ -74,6 +71,7 @@ function pintarTablero(
 
                 return (
                     <Celda
+                        puedeLlegar={puedeLlegar}
                         pulsarCelda={funcionPulsar}
                         key={indice++}
                         fila={celda.fila}
@@ -90,6 +88,7 @@ function pintarTablero(
 
                 return (
                     <Celda
+                        puedeLlegar={puedeLlegar}
                         pulsarCelda={funcionPulsar}
                         key={indice++}
                         fila={celda.fila}

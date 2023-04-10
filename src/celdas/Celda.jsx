@@ -2,8 +2,17 @@ import React from "react";
 
 import estilos from "./Celda.module.css";
 
-const Celda = ({ fila, columna, ficha, pulsarCelda, seleccionado }) => {
+const Celda = ({
+    fila,
+    columna,
+    ficha,
+    pulsarCelda,
+    seleccionado,
+    puedeLlegar,
+}) => {
     let letra = String.fromCharCode(columna + "A".charCodeAt(0));
+
+    console.log(puedeLlegar);
 
     return (
         <div
@@ -14,7 +23,9 @@ const Celda = ({ fila, columna, ficha, pulsarCelda, seleccionado }) => {
                 " " +
                 (ficha ? estilos.celdaConFicha : "") +
                 " " +
-                (seleccionado ? estilos.celdaSeleccionada : "")
+                (seleccionado ? estilos.celdaSeleccionada : "") +
+                " " +
+                (puedeLlegar ? estilos.puedeLlegar : "")
             }
             onClick={pulsarCelda}
         >

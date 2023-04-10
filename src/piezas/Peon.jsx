@@ -5,14 +5,11 @@ const Peon = ({ fila, columna, color }) => {
     return <Pieza texto="&#9823;" color={color} />;
 };
 
-Peon.puedeMoverse = function(
-    filaOrigen,
-    columnaOrigen,
-    filaDestino,
-    columnaDestino
-) {
-    if (filaOrigen === filaDestino && 0) {
+Peon.puedeMoverse = function(celda, fichaActiva) {
+    if (celda.fila === fichaActiva.fila && 0) {
     }
+
+    return true;
 };
 
 export default Peon;

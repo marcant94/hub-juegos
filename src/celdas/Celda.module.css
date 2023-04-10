@@ -18,10 +18,6 @@
     background-color: #b1a7fc !important;
 }
 
-:local(.celdaAtacable) {
-    background-color: #edbec7 !important;
-}
-
 :local(.filaPar):nth-child(even),
 :local(.filaImpar):nth-child(odd) {
     background-color: #b7c0d8;
@@ -53,4 +49,13 @@
 :local(.celdaSeleccionada) :local(.marcador),
 :local(.celda):hover :local(.marcador) {
     display: block;
+}
+
+:local(.celdaConFicha):local(.puedeLlegar) {
+    /* Es atacable */
+    background-color: #edbec7 !important;
+}
+
+:local(.puedeLlegar):not(:local(.celdaConFicha)) {
+    background-color: yellow;
 }

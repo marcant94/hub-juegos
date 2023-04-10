@@ -5,4 +5,8 @@ const Rey = ({ fila, columna, color }) => {
     return <Pieza texto="&#9818;" color={color} />;
 };
 
+Rey.puedeMoverse = function(celda, fichaActiva) {
+    return true;
+};
+
 export default Rey;
