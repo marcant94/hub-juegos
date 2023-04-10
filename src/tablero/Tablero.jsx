@@ -122,6 +122,7 @@ const Tablero = (props) => {
 
     const [tableroFichas, setTableroFichas] = useState(tableroVacio);
     const [fichas, setFichas] = useState(arrayFichas);
+    const [turno, setTurno] = useState("B");
 
     return (
         <div>
@@ -132,6 +133,8 @@ const Tablero = (props) => {
                 setTableroFichas={setTableroFichas}
                 fichas={fichas}
                 setFichas={setFichas}
+                turno={turno}
+                setTurno={setTurno}
             />
         </div>
     );

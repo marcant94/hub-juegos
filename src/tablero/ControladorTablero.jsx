@@ -11,7 +11,18 @@ function seleccionarFicha(celda, activo, setActivo, evento) {
     }
 }
 
-function pintarTablero(tableroFichas, fichas, activo, setActivo) {
+function desseleccionarFicha(setActivo) {
+    setActivo({});
+}
+
+function pintarTablero(
+    tableroFichas,
+    fichas,
+    activo,
+    setActivo,
+    turno,
+    setTurno
+) {
     let indice = -1;
 
     return tableroFichas.map((celda) => {
@@ -31,18 +42,28 @@ function pintarTablero(tableroFichas, fichas, activo, setActivo) {
                     celda.fila === activo.fila &&
                     celda.columna === activo.columna;
 
-                if (celdaSeleccionada) {
-                    console.log(celda, "=", activo);
+                let funcionPulsar = undefined;
+
+                let hayActivo = Object.keys(activo).length;
+                if (hayActivo) {
+                    if (celdaSeleccionada) {
+                        funcionPulsar = desseleccionarFicha.bind(
+                            this,
+                            setActivo
+                        );
+                    }
+                } else if (fichaEnEstaCelda.props.color === turno) {
+                    funcionPulsar = seleccionarFicha.bind(
+                        this,
+                        celda,
+                        activo,
+                        setActivo
+                    );
                 }
 
                 return (
                     <Celda
-                        pulsarCelda={seleccionarFicha.bind(
-                            this,
-                            celda,
-                            activo,
-                            setActivo
-                        )}
+                        pulsarCelda={funcionPulsar}
                         key={indice++}
                         fila={celda.fila}
                         columna={celda.columna}
@@ -53,12 +74,12 @@ function pintarTablero(tableroFichas, fichas, activo, setActivo) {
             } else {
                 return (
                     <Celda
-                        pulsarCelda={seleccionarFicha.bind(
-                            this,
-                            celda,
-                            activo,
-                            setActivo
-                        )}
+                        // pulsarCelda={seleccionarFicha.bind(
+                        //     this,
+                        //     celda,
+                        //     activo,
+                        //     setActivo
+                        // )}
                         key={indice++}
                         fila={celda.fila}
                         columna={celda.columna}
@@ -75,12 +96,21 @@ const ControladorTablero = ({
     setTableroFichas,
     fichas,
     setFichas,
+    turno,
+    setTurno,
 }) => {
     const [activo, setActivo] = useState({});
 
     return (
         <div className={estilos.tablaFlex}>
-            {pintarTablero(tableroFichas, fichas, activo, setActivo)}
+            {pintarTablero(
+                tableroFichas,
+                fichas,
+                activo,
+                setActivo,
+                turno,
+                setTurno
+            )}
         </div>
     );
 };
