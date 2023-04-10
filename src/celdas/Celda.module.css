@@ -1,4 +1,5 @@
 :local(.celda) {
+    position: relative;
     height: 65px;
     width: 65px;
     line-height: 65px;
@@ -14,21 +15,39 @@
 }
 
 :local(.celdaSeleccionada) {
-    border: 3px solid yellow;
+    /* border: 3px solid yellow; */
+    background-color: #b1a7fc !important;
 }
 
 :local(.filaPar):nth-child(even),
 :local(.filaImpar):nth-child(odd) {
-    background-color: #caab7c;
+    background-color: #b7c0d8;
+    /* background-color: #caab7c; */
     /* background-color: #ebecd0; */
 }
 
 :local(.filaPar):nth-child(odd),
 :local(.filaImpar):nth-child(even) {
-    background-color: #96743d;
+    background-color: #e8edf9;
+    /* background-color: #96743d; */
     /* background-color: #779556; */
 }
 
 :local(.celdaConFicha) {
     cursor: pointer;
+}
+
+:local(.marcador) {
+    display: none;
+    position: absolute;
+    color: black;
+    font-size: 0.75rem;
+    top: 2px;
+    left: 2px;
+    line-height: normal;
+}
+
+:local(.celdaSeleccionada) :local(.marcador),
+:local(.celda):hover :local(.marcador) {
+    display: block;
 }
