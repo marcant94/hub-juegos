@@ -1,0 +1,14 @@
+:local(.blanca) {
+    color: white;
+    text-shadow: 0px 0px 5px black;
+}
+
+:local(.negra) {
+    color: black;
+    text-shadow: 0px 0px 5px white;
+}
+
+:local(.blanca),
+:local(.negra) {
+    cursor: pointer;
+}

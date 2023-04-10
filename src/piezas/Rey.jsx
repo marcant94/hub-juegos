@@ -1,7 +1,8 @@
 import React from "react";
+import Pieza from "./Pieza";
 
-const Rey = (props) => {
-    return <>&#9818;</>;
+const Rey = ({ fila, columna, color }) => {
+    return <Pieza texto="&#9818;" color={color} />;
 };
 
 export default Rey;

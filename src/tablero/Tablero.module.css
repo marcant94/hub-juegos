@@ -1,16 +1,10 @@
-table:local(.tablero) {
-    border: 1px solid black;
-    width: 600px;
-    height: 600px;
-    margin: 0 auto;
-}
 
 :local(.tablaFlex) {
     margin: 0 auto;
     width: fit-content;
 
     display: grid;
-    grid-template-columns: repeat(9, 75px);
+    grid-template-columns: repeat(9, 65px);
     grid-gap: 0px;
 }
 

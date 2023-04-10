@@ -1,5 +1,8 @@
 :local(.celda) {
-    height: 75px;
+    height: 65px;
+    font-size: 2.75rem;
+    text-align: center;
+    font-weight: normal;
 }
 
 :local(.celda):nth-child(even) {

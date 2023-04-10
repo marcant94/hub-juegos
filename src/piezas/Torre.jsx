@@ -1,7 +1,8 @@
-import React from "react"
+import React from "react";
+import Pieza from "./Pieza";
 
-const Torre = (props) => {
-    return <>&#9820;</>;
+const Torre = ({ fila, columna, color }) => {
+    return <Pieza texto="&#9820;" color={color} />;
 };
 
 export default Torre;
