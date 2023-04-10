@@ -12,8 +12,6 @@ const Celda = ({
 }) => {
     let letra = String.fromCharCode(columna + "A".charCodeAt(0));
 
-    console.log(puedeLlegar);
-
     return (
         <div
             className={
