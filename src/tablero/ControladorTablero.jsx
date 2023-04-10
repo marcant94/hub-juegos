@@ -45,13 +45,8 @@ function pintarTablero(
                 let funcionPulsar = undefined;
 
                 let hayActivo = Object.keys(activo).length;
-                if (hayActivo) {
-                    if (celdaSeleccionada) {
-                        funcionPulsar = desseleccionarFicha.bind(
-                            this,
-                            setActivo
-                        );
-                    }
+                if (hayActivo && celdaSeleccionada) {
+                    funcionPulsar = desseleccionarFicha.bind(this, setActivo);
                 } else if (fichaEnEstaCelda.props.color === turno) {
                     funcionPulsar = seleccionarFicha.bind(
                         this,
