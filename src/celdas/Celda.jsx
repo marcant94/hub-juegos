@@ -22,7 +22,7 @@ const Celda = ({ fila, columna, ficha, pulsarCelda, seleccionado }) => {
                 {fila}
                 {letra}
             </div>
-            {ficha ? ficha : undefined}
+            {ficha ? <ficha.pieza color={ficha.color} /> : undefined}
         </div>
     );
 };

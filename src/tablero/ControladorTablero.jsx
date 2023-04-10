@@ -30,8 +30,8 @@ function pintarTablero(
     if (hayActivo) {
         fichaActiva = fichas.find(
             (ficha) =>
-                ficha.props.fila === activo.fila &&
-                ficha.props.columna === activo.columna
+                ficha.fila === activo.fila &&
+                ficha.columna === activo.columna
         );
     }
 
@@ -43,8 +43,8 @@ function pintarTablero(
         } else {
             let fichaEnEstaCelda = fichas.find(
                 (ficha) =>
-                    ficha.props.fila === celda.fila &&
-                    ficha.props.columna === celda.columna
+                    ficha.fila === celda.fila &&
+                    ficha.columna === celda.columna
             );
 
             let celdaSeleccionada =
@@ -54,8 +54,8 @@ function pintarTablero(
                 fichaActiva.type.puedeMoverse(
                     celda.fila,
                     celda.columna,
-                    fichaActiva.props.fila,
-                    fichaActiva.props.columna
+                    fichaActiva.fila,
+                    fichaActiva.columna
                 );
             }
 
@@ -63,7 +63,7 @@ function pintarTablero(
                 let funcionPulsar = undefined;
                 if (hayActivo && celdaSeleccionada) {
                     funcionPulsar = desseleccionarFicha.bind(this, setActivo);
-                } else if (fichaEnEstaCelda.props.color === turno) {
+                } else if (fichaEnEstaCelda.color === turno) {
                     funcionPulsar = seleccionarFicha.bind(
                         this,
                         celda,
