@@ -10,7 +10,7 @@ const Celda = ({
     seleccionado,
     puedeLlegar,
 }) => {
-    let letra = String.fromCharCode(columna + "A".charCodeAt(0));
+    let letra = String.fromCharCode(columna - 1 + "A".charCodeAt(0));
 
     return (
         <div
