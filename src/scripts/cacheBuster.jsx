@@ -23,26 +23,27 @@ class CacheBuster extends React.Component {
         super(props);
         this.state = {
             loading: true,
-            isLatestVersion: false,
-            refreshCacheAndReload: (reload = true) => {
-                console.log("Limpiando cache y recargando aplicación...");
-
-                try {
-                    if (caches) {
-                        // Service worker cache should be cleared with caches.delete()
-                        caches.keys().then(function(names) {
-                            for (let name of names) caches.delete(name);
-                        });
-                    }
-                } catch (error) {}
-
-                if (reload) {
-                    // delete browser cache and hard reload
-                    window.location.reload(true);
-                }
-            },
+            isLatestVersion: false
         };
     }
+
+    refreshCacheAndReload = (reload = true) => {
+        console.log("Limpiando cache y recargando aplicación...");
+
+        try {
+            if (caches) {
+                // Service worker cache should be cleared with caches.delete()
+                caches.keys().then(function(names) {
+                    for (let name of names) caches.delete(name);
+                });
+            }
+        } catch (error) {}
+
+        if (reload) {
+            // delete browser cache and hard reload
+            window.location.reload(true);
+        }
+    };
 
     componentDidMount() {
         if (process.env.NODE_ENV !== "production") {
@@ -52,43 +53,31 @@ class CacheBuster extends React.Component {
         }
 
         // Traemos siempre el meta.json sin cachear para tener la última versión.
-        fetch("./meta.json?f=" + new Date().getTime())
-            .then((response) => response.json())
-            .then((meta) => {
+        fetch("/meta.json?f=" + new Date().getTime())
+            .then(response => response.json())
+            .then(meta => {
                 const latestVersion = meta.version;
                 const currentVersion = packageJson.version;
 
-                const shouldForceRefresh = semverGreaterThan(
-                    latestVersion,
-                    currentVersion
-                );
+                const shouldForceRefresh = semverGreaterThan(latestVersion, currentVersion);
                 if (shouldForceRefresh) {
-                    console.log(
-                        `Tenemos una nueva versión - ${latestVersion}. Debemos forzar el refresco de la aplicación.`
-                    );
+                    console.log(`Tenemos una nueva versión - ${latestVersion}. Debemos forzar el refresco de la aplicación.`);
                     this.setState({ loading: false, isLatestVersion: false });
                 } else {
-                    console.log(
-                        `Tienes la última versión disponible - ${latestVersion}. No se necesita actualizar la caché.`
-                    );
+                    console.log(`Tienes la última versión disponible - ${latestVersion}. No se necesita actualizar la caché.`);
                     this.setState({ loading: false, isLatestVersion: true });
                 }
             })
-            .catch((error) => {
-                console.log(
-                    `Versión anterior desconocida. Forzamos el refresco de la aplicación.`
-                );
-                this.state.refreshCacheAndReload(false);
+            .catch(error => {
+                console.log(`Versión anterior desconocida. Forzamos el refresco de la aplicación.`);
+                this.refreshCacheAndReload(false);
                 this.setState({ loading: false, isLatestVersion: true });
             });
     }
     render() {
-        const { loading, isLatestVersion, refreshCacheAndReload } = this.state;
-        return this.props.children({
-            loading,
-            isLatestVersion,
-            refreshCacheAndReload,
-        });
+        const { loading, isLatestVersion } = this.state;
+        let refreshCacheAndReload = this.refreshCacheAndReload;
+        return this.props.children({ loading, isLatestVersion, refreshCacheAndReload });
     }
 }
 
