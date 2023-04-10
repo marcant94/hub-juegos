@@ -5,6 +5,7 @@ pages:
     cache:
         paths:
             - node_modules/
+            - yarn.lock
     script:
         - npm install
         - npm run build
