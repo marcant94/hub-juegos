@@ -52,7 +52,7 @@ class CacheBuster extends React.Component {
         }
 
         // Traemos siempre el meta.json sin cachear para tener la última versión.
-        fetch("/meta.json?f=" + new Date().getTime())
+        fetch("./meta.json?f=" + new Date().getTime())
             .then((response) => response.json())
             .then((meta) => {
                 const latestVersion = meta.version;
