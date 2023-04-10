@@ -2,7 +2,8 @@
 :local(.tablaFlex) {
     margin: 0 auto;
     width: fit-content;
-
+    background-color: white;
+    border-radius: 15px;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-gap: 0px;
@@ -12,19 +13,10 @@
 
 :local(.celdaFila),
 :local(.celdaFilaFin) {
+    text-align: center;
     align-self: center;
     font-weight: bold;
     font-size: 1.5rem;
-}
-
-:local(.celdaFila) {
-    text-align: right;
-    margin-right: 15px;
-}
-
-:local(.celdaFilaFin) {
-    text-align: left;
-    margin-left: 15px;
 }
 
 :local(.celdaColumna) {
