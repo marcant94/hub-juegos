@@ -11,4 +11,5 @@
 :local(.blanca),
 :local(.negra) {
     pointer-events: none;
+    user-select: none;
 }

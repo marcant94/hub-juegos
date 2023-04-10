@@ -14,9 +14,24 @@ import Reina from "../piezas/Reina";
 function generarTableroVacio() {
     let tableroVacio = [];
 
+    tableroVacio.push(<div key="celdaEsquinaArribaIzquierda"></div>);
+    for (let columna = 0; columna <= 7; columna++) {
+        let letra = String.fromCharCode(columna + "A".charCodeAt(0));
+
+        tableroVacio.push(
+            <div
+                key={"celdaLetraArriba" + columna}
+                className={estilos.celdaColumna}
+            >
+                {letra}
+            </div>
+        );
+    }
+    tableroVacio.push(<div key="celdaEsquinaArribaDerecha"></div>);
+
     for (let fila = 8; fila > 0; fila--) {
         tableroVacio.push(
-            <div key={"celdaFila" + fila} className={estilos.celdaFila}>
+            <div key={"celdaFilaInicio" + fila} className={estilos.celdaFila}>
                 {fila}
             </div>
         );
@@ -29,18 +44,28 @@ function generarTableroVacio() {
 
             tableroVacio.push(celda);
         }
+
+        tableroVacio.push(
+            <div key={"celdaFilaFin" + fila} className={estilos.celdaFilaFin}>
+                {fila}
+            </div>
+        );
     }
 
-    tableroVacio.push(<div key="celdaEsquina"></div>);
+    tableroVacio.push(<div key="celdaEsquinaAbajoIzquierda"></div>);
     for (let columna = 0; columna <= 7; columna++) {
         let letra = String.fromCharCode(columna + "A".charCodeAt(0));
 
         tableroVacio.push(
-            <div key={"celdaLetra" + columna} className={estilos.celdaColumna}>
+            <div
+                key={"celdaLetraAbajo" + columna}
+                className={estilos.celdaColumna}
+            >
                 {letra}
             </div>
         );
     }
+    tableroVacio.push(<div key="celdaEsquinaAbajoDerecha"></div>);
 
     return tableroVacio;
 }
@@ -95,8 +120,6 @@ const Tablero = (props) => {
     let tableroVacio = generarTableroVacio();
     let arrayFichas = generarFichas();
 
-    console.log("inicio tablero");
-
     const [tableroFichas, setTableroFichas] = useState(tableroVacio);
     const [fichas, setFichas] = useState(arrayFichas);
 
@@ -110,7 +133,6 @@ const Tablero = (props) => {
                 fichas={fichas}
                 setFichas={setFichas}
             />
-            {/* <div className={estilos.tablaFlex}>{tableroFichas}</div> */}
         </div>
     );
 };

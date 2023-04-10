@@ -1,24 +1,34 @@
 :local(.celda) {
     height: 65px;
-    font-size: 2.75rem;
+    width: 65px;
+    line-height: 65px;
+    font-size: 2.5rem;
     text-align: center;
     font-weight: normal;
+    box-sizing: border-box;
 }
 
-:local(.celda):nth-child(even) {
+:local(.celdaSeleccionada),
+:local(.celda):hover {
+    font-size: 3.25rem;
+}
+
+:local(.celdaSeleccionada) {
+    border: 3px solid yellow;
+}
+
+:local(.filaPar):nth-child(even),
+:local(.filaImpar):nth-child(odd) {
     background-color: #caab7c;
+    /* background-color: #ebecd0; */
 }
 
-:local(.celda):nth-child(odd) {
+:local(.filaPar):nth-child(odd),
+:local(.filaImpar):nth-child(even) {
     background-color: #96743d;
+    /* background-color: #779556; */
 }
 
 :local(.celdaConFicha) {
     cursor: pointer;
 }
-
-/* 
-:local(.celda) {
-    background-color: #ebecd0;
-    background-color: #779556;
-} */

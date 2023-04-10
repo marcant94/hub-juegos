@@ -4,21 +4,30 @@
     width: fit-content;
 
     display: grid;
-    grid-template-columns: repeat(9, 65px);
+    grid-template-columns: repeat(10, 1fr);
     grid-gap: 0px;
 }
 
-:local(.celdaFila) {
-    text-align: right;
+:local(.celdaFila),
+:local(.celdaFilaFin) {
     align-self: center;
-    margin-right: 10px;
     font-weight: bold;
     font-size: 1.5rem;
 }
 
+:local(.celdaFila) {
+    text-align: right;
+    margin-right: 10px;
+}
+
+:local(.celdaFilaFin) {
+    text-align: left;
+    margin-left: 10px;
+}
+
 :local(.celdaColumna) {
     text-align: center;
-    margin-top: 10px;
+    margin: 10px 0px;
     font-weight: bold;
     font-size: 1.5rem;
 }
