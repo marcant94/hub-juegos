@@ -219,7 +219,6 @@ function generarFichas() {
         movimientos: 0,
     });
 
-    console.log(fichasIniciales);
     return fichasIniciales;
 }
 
