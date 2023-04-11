@@ -10,8 +10,6 @@ import Rey from "../piezas/Rey";
 import Reina from "../piezas/Reina";
 import Boton from "../elementos/Boton";
 
-// const [count, setCount] = useState(0);
-
 function generarTableroVacio() {
     let tableroVacio = [];
 
@@ -223,16 +221,6 @@ function generarFichas() {
     return fichasIniciales;
 }
 
-function reiniciarJuego(setFichas, setTurno, setActivo) {
-    movimientos = 0;
-    turnoActual = "B";
-
-    let arrayFichas = generarFichas();
-    setFichas(arrayFichas);
-    setTurno("B");
-    setActivo({});
-}
-
 let movimientos = 0;
 let turnoActual = "B";
 
@@ -246,9 +234,23 @@ const Tablero = (props) => {
     const [turno, setTurno] = useState("B");
     const [activo, setActivo] = useState({});
 
+    function reiniciarJuego() {
+        movimientos = 0;
+        turnoActual = "B";
+
+        let arrayFichas = generarFichas();
+        setFichas(arrayFichas);
+        setTurno("B");
+        setActivo({});
+    }
+
     if (turnoActual !== turno) {
         movimientos++;
         turnoActual = turno;
+
+        // Guardamos en el localstorage las fichas y el turno
+        localStorage.setItem("fichas", JSON.stringify(fichas));
+        localStorage.setItem("turno", JSON.stringify(turno));
     }
 
     return (
@@ -260,12 +262,7 @@ const Tablero = (props) => {
 
                 <Boton
                     desactivado={movimientos === 0}
-                    fnClick={reiniciarJuego.bind(
-                        this,
-                        setFichas,
-                        setTurno,
-                        setActivo
-                    )}
+                    fnClick={reiniciarJuego}
                 >
                     Reiniciar
                 </Boton>
