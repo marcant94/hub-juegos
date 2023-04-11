@@ -25,6 +25,31 @@
     font-size: 1.5rem;
 }
 
+:local(.contenedorTablero) {
+    margin-top: 60px;
+}
+
+:local(.appbar) {
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    padding: 5px 25px;
+    display: inline-flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+:local(.appbar) > * {
+    align-self: center;
+}
+
+:local(.separadorDerecha) {
+    margin-left: auto;
+}
+
 @media screen and (max-width: 768px) {
     :local(.celdaFila),
     :local(.celdaFilaFin) {

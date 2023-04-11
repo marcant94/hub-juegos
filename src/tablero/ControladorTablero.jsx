@@ -174,9 +174,9 @@ const ControladorTablero = ({
     setFichas,
     turno,
     setTurno,
+    activo,
+    setActivo,
 }) => {
-    const [activo, setActivo] = useState({});
-
     return (
         <div className={estilos.tablaFlex}>
             {pintarTablero(

@@ -8,6 +8,7 @@ import Alfil from "../piezas/Alfil";
 import Caballo from "../piezas/Caballo";
 import Rey from "../piezas/Rey";
 import Reina from "../piezas/Reina";
+import Boton from "../elementos/Boton";
 
 // const [count, setCount] = useState(0);
 
@@ -222,22 +223,59 @@ function generarFichas() {
     return fichasIniciales;
 }
 
+function reiniciarJuego(setFichas, setTurno, setActivo) {
+    movimientos = 0;
+    turnoActual = "B";
+
+    let arrayFichas = generarFichas();
+    setFichas(arrayFichas);
+    setTurno("B");
+    setActivo({});
+}
+
+let movimientos = 0;
+let turnoActual = "B";
+
 const Tablero = (props) => {
     let tableroVacio = generarTableroVacio();
-    let arrayFichas = generarFichas();
-
     const [tableroFichas, setTableroFichas] = useState(tableroVacio);
+
+    let arrayFichas = generarFichas();
     const [fichas, setFichas] = useState(arrayFichas);
+
     const [turno, setTurno] = useState("B");
+    const [activo, setActivo] = useState({});
+
+    if (turnoActual !== turno) {
+        movimientos++;
+        turnoActual = turno;
+    }
 
     return (
-        <div>
+        <div className={estilos.contenedorTablero}>
+            <div className={estilos.appbar}>
+                <div>Ajedrez</div>
+
+                <span className={estilos.separadorDerecha}></span>
+
+                <Boton
+                    desactivado={movimientos === 0}
+                    fnClick={reiniciarJuego.bind(
+                        this,
+                        setFichas,
+                        setTurno,
+                        setActivo
+                    )}
+                >
+                    Reiniciar
+                </Boton>
+            </div>
+
             {/* Menu seleccion colores de tablero y de fichas */}
             {/* Mostrar turno (y contador de turnos) */}
             {/* Mostrar fichas comidas */}
             {/* Añadir transiciones cortas al mover las fichas */}
-            {/* Boton para reiniciar (guardar fichas en localstorage) */}
-            <br />
+            {/* Guardar fichas en localstorage para recordar juego al salir */}
             <ControladorTablero
                 key="elcontrolador"
                 tableroFichas={tableroFichas}
@@ -246,6 +284,8 @@ const Tablero = (props) => {
                 setFichas={setFichas}
                 turno={turno}
                 setTurno={setTurno}
+                activo={activo}
+                setActivo={setActivo}
             />
         </div>
     );
