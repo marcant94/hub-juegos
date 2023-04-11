@@ -56,7 +56,7 @@ Peon.puedeMoverse = function(celda, fichaActiva, fichas) {
                 ficha.fila === celda.fila && ficha.columna === celda.columna
         );
 
-        if (fichaDelante) {
+        if (fichaDelante && fichaDelante.color !== fichaActiva.color) {
             return true;
         }
     }
