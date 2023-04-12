@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import estilos from "./Tablero.module.css";
-import Peon from "../piezas/Peon";
 import ControladorTablero from "./ControladorTablero";
-import Torre from "../piezas/Torre";
+
 import Alfil from "../piezas/Alfil";
 import Caballo from "../piezas/Caballo";
-import Rey from "../piezas/Rey";
+import Peon from "../piezas/Peon";
 import Reina from "../piezas/Reina";
+import Rey from "../piezas/Rey";
+import Torre from "../piezas/Torre";
+
 import Boton from "../elementos/Boton";
 
 function generarTableroVacio() {
@@ -79,6 +81,7 @@ function generarFichas() {
             columna: index,
             color: "B",
             pieza: Peon,
+            nombrePieza: "Peon",
             movimientos: 0,
         });
     }
@@ -90,6 +93,7 @@ function generarFichas() {
             columna: index,
             color: "N",
             pieza: Peon,
+            nombrePieza: "Peon",
             movimientos: 0,
         });
     }
@@ -100,6 +104,7 @@ function generarFichas() {
         columna: 1,
         color: "N",
         pieza: Torre,
+        nombrePieza: "Torre",
         movimientos: 0,
     });
     fichasIniciales.push({
@@ -107,6 +112,7 @@ function generarFichas() {
         columna: 8,
         color: "N",
         pieza: Torre,
+        nombrePieza: "Torre",
         movimientos: 0,
     });
 
@@ -115,6 +121,7 @@ function generarFichas() {
         columna: 1,
         color: "B",
         pieza: Torre,
+        nombrePieza: "Torre",
         movimientos: 0,
     });
     fichasIniciales.push({
@@ -122,6 +129,7 @@ function generarFichas() {
         columna: 8,
         color: "B",
         pieza: Torre,
+        nombrePieza: "Torre",
         movimientos: 0,
     });
 
@@ -131,6 +139,7 @@ function generarFichas() {
         columna: 2,
         color: "N",
         pieza: Caballo,
+        nombrePieza: "Caballo",
         movimientos: 0,
     });
     fichasIniciales.push({
@@ -138,6 +147,7 @@ function generarFichas() {
         columna: 7,
         color: "N",
         pieza: Caballo,
+        nombrePieza: "Caballo",
         movimientos: 0,
     });
 
@@ -146,6 +156,7 @@ function generarFichas() {
         columna: 2,
         color: "B",
         pieza: Caballo,
+        nombrePieza: "Caballo",
         movimientos: 0,
     });
     fichasIniciales.push({
@@ -153,6 +164,7 @@ function generarFichas() {
         columna: 7,
         color: "B",
         pieza: Caballo,
+        nombrePieza: "Caballo",
         movimientos: 0,
     });
 
@@ -162,6 +174,7 @@ function generarFichas() {
         columna: 3,
         color: "N",
         pieza: Alfil,
+        nombrePieza: "Alfil",
         movimientos: 0,
     });
     fichasIniciales.push({
@@ -169,6 +182,7 @@ function generarFichas() {
         columna: 6,
         color: "N",
         pieza: Alfil,
+        nombrePieza: "Alfil",
         movimientos: 0,
     });
 
@@ -177,6 +191,7 @@ function generarFichas() {
         columna: 3,
         color: "B",
         pieza: Alfil,
+        nombrePieza: "Alfil",
         movimientos: 0,
     });
     fichasIniciales.push({
@@ -184,6 +199,7 @@ function generarFichas() {
         columna: 6,
         color: "B",
         pieza: Alfil,
+        nombrePieza: "Alfil",
         movimientos: 0,
     });
 
@@ -193,6 +209,7 @@ function generarFichas() {
         columna: 5,
         color: "N",
         pieza: Rey,
+        nombrePieza: "Rey",
         movimientos: 0,
     });
     fichasIniciales.push({
@@ -200,6 +217,7 @@ function generarFichas() {
         columna: 4,
         color: "N",
         pieza: Reina,
+        nombrePieza: "Reina",
         movimientos: 0,
     });
 
@@ -208,6 +226,7 @@ function generarFichas() {
         columna: 5,
         color: "B",
         pieza: Rey,
+        nombrePieza: "Rey",
         movimientos: 0,
     });
     fichasIniciales.push({
@@ -215,74 +234,133 @@ function generarFichas() {
         columna: 4,
         color: "B",
         pieza: Reina,
+        nombrePieza: "Reina",
         movimientos: 0,
     });
 
     return fichasIniciales;
 }
 
-let movimientos = 0;
-let turnoActual = "B";
-
 const Tablero = (props) => {
-    let tableroVacio = generarTableroVacio();
-    const [tableroFichas, setTableroFichas] = useState(tableroVacio);
+    function iniciarJuego(cargaInicial = false) {
+        let arrayFichas = null;
+        let movimientosInicial = 0;
 
-    let arrayFichas = generarFichas();
-    const [fichas, setFichas] = useState(arrayFichas);
+        if (cargaInicial) {
+            const local_movimientos = JSON.parse(
+                localStorage.getItem("movimientos")
+            );
 
-    const [turno, setTurno] = useState("B");
-    const [activo, setActivo] = useState({});
+            if (local_movimientos) {
+                const local_fichas = JSON.parse(localStorage.getItem("fichas"));
 
-    function reiniciarJuego() {
-        movimientos = 0;
-        turnoActual = "B";
+                arrayFichas = local_fichas;
+                movimientosInicial = local_movimientos;
 
-        let arrayFichas = generarFichas();
+                arrayFichas.forEach((ficha) => {
+                    switch (ficha.nombrePieza) {
+                        case "Alfil":
+                            ficha.pieza = Alfil;
+                            break;
+                        case "Caballo":
+                            ficha.pieza = Caballo;
+                            break;
+                        case "Peon":
+                            ficha.pieza = Peon;
+                            break;
+                        case "Reina":
+                            ficha.pieza = Reina;
+                            break;
+                        case "Rey":
+                            ficha.pieza = Rey;
+                            break;
+                        case "Torre":
+                            ficha.pieza = Torre;
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
+        }
+
+        if (!arrayFichas) {
+            arrayFichas = generarFichas();
+        }
+
         setFichas(arrayFichas);
-        setTurno("B");
+        setMovimientos(movimientosInicial);
         setActivo({});
     }
 
-    if (turnoActual !== turno) {
-        movimientos++;
-        turnoActual = turno;
+    const isMounted = useRef(false);
 
-        // Guardamos en el localstorage las fichas y el turno
+    const [tableroFichas, setTableroFichas] = useState([]);
+    const [fichas, setFichas] = useState([]);
+    const [activo, setActivo] = useState({});
+    const [movimientos, setMovimientos] = useState(0);
+
+    useEffect(() => {
+        if (!isMounted.current) {
+            return;
+        }
+
+        // Guardamos en el localstorage las fichas y el nº movimientos
         localStorage.setItem("fichas", JSON.stringify(fichas));
-        localStorage.setItem("turno", JSON.stringify(turno));
-    }
+        localStorage.setItem("movimientos", JSON.stringify(movimientos));
+    }, [movimientos]);
+
+    useEffect(() => {
+        // Constructor
+        isMounted.current = true;
+
+        let tableroVacio = generarTableroVacio();
+
+        setTableroFichas(tableroVacio);
+        iniciarJuego(true);
+    }, []);
+
+    let turno = movimientos % 2 === 0 ? "B" : "N";
+    let textoTurno = movimientos % 2 === 0 ? "Blancas" : "Negras";
 
     return (
         <div className={estilos.contenedorTablero}>
             <div className={estilos.appbar}>
-                <div>Ajedrez</div>
+                <div>
+                    <b>Ajedrez React</b>
+                </div>
 
                 <span className={estilos.separadorDerecha}></span>
 
+                <span>
+                    <b>Turno:</b> {textoTurno}
+                </span>
+                <span>
+                    <b>Movimientos:</b> {movimientos}
+                </span>
+
                 <Boton
                     desactivado={movimientos === 0}
-                    fnClick={reiniciarJuego}
+                    fnClick={iniciarJuego.bind(this, false)}
                 >
                     Reiniciar
                 </Boton>
             </div>
 
             {/* Menu seleccion colores de tablero y de fichas */}
-            {/* Mostrar turno (y contador de turnos) */}
             {/* Mostrar fichas comidas */}
             {/* Añadir transiciones cortas al mover las fichas */}
-            {/* Guardar fichas en localstorage para recordar juego al salir */}
             <ControladorTablero
                 key="elcontrolador"
                 tableroFichas={tableroFichas}
                 setTableroFichas={setTableroFichas}
                 fichas={fichas}
                 setFichas={setFichas}
-                turno={turno}
-                setTurno={setTurno}
+                movimientos={movimientos}
+                setMovimientos={setMovimientos}
                 activo={activo}
                 setActivo={setActivo}
+                turno={turno}
             />
         </div>
     );

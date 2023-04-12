@@ -46,6 +46,10 @@
     align-self: center;
 }
 
+:local(.appbar) > * + * {
+    margin-left: 25px;
+}
+
 :local(.separadorDerecha) {
     margin-left: auto;
 }
