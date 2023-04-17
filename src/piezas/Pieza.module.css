@@ -13,3 +13,7 @@
     pointer-events: none;
     user-select: none;
 }
+
+.pieza {
+    transition: font-size 350ms;
+}

@@ -4,7 +4,13 @@ import estilos from "./Pieza.module.css";
 
 const Pieza = ({ texto, color }) => {
     return (
-        <span className={color === "B" ? estilos.blanca : estilos.negra}>
+        <span
+            className={
+                estilos.pieza +
+                " " +
+                (color === "B" ? estilos.blanca : estilos.negra)
+            }
+        >
             {texto}
         </span>
     );
