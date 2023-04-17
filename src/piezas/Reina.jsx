@@ -7,7 +7,21 @@ const Reina = ({ fila, columna, color }) => {
 
 Reina.calcularCeldasDestino = function(fichaActiva, fichas) {
     // Calculamos todas las celdas de destino posibles
+    let celdasDestinoAlfil = Pieza.calcularCeldasDestinoAlfil(
+        fichaActiva,
+        fichas
+    );
+
+    let celdasDestinoTorre = Pieza.calcularCeldasDestinoTorre(
+        fichaActiva,
+        fichas
+    );
+
     let celdasDestino = [];
+    celdasDestino = celdasDestino.concat(
+        celdasDestinoAlfil,
+        celdasDestinoTorre
+    );
 
     return celdasDestino;
 };

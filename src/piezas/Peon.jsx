@@ -25,17 +25,20 @@ Peon.calcularCeldasDestino = function(fichaActiva, fichas) {
         });
     }
 
-    let fichaSiguiente = fichas.find(
-        (ficha) =>
-            ficha.fila === fichaActiva.fila + direccionDoble &&
-            ficha.columna === fichaActiva.columna
-    );
+    if (!fichaDelante && fichaActiva.movimientos === 0) {
+        // Si no hay ficha delante y no se ha movido nunca, podria avanzar de salida 2 casillas
+        let fichaSiguiente = fichas.find(
+            (ficha) =>
+                ficha.fila === fichaActiva.fila + direccionDoble &&
+                ficha.columna === fichaActiva.columna
+        );
 
-    if (!fichaSiguiente) {
-        celdasDestino.push({
-            fila: fichaActiva.fila + direccionDoble,
-            columna: fichaActiva.columna,
-        });
+        if (!fichaSiguiente) {
+            celdasDestino.push({
+                fila: fichaActiva.fila + direccionDoble,
+                columna: fichaActiva.columna,
+            });
+        }
     }
 
     // Comprobamos las 2 celdas en diagonal
@@ -70,7 +73,6 @@ Peon.calcularCeldasDestino = function(fichaActiva, fichas) {
             columna: fichaDiagonalDerecha.columna,
         });
     }
-
 
     // Comprobar captura en paso
 
