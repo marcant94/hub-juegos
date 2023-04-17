@@ -7,7 +7,9 @@ const Alfil = ({ fila, columna, color }) => {
 
 Alfil.calcularCeldasDestino = function(fichaActiva, fichas) {
     // Calculamos todas las celdas de destino posibles
-    return [];
+    let celdasDestino = [];
+
+    return celdasDestino;
 };
 
 export default Alfil;

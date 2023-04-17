@@ -7,7 +7,9 @@ const Reina = ({ fila, columna, color }) => {
 
 Reina.calcularCeldasDestino = function(fichaActiva, fichas) {
     // Calculamos todas las celdas de destino posibles
-    return [];
+    let celdasDestino = [];
+
+    return celdasDestino;
 };
 
 export default Reina;

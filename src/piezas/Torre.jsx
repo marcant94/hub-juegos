@@ -5,35 +5,119 @@ const Torre = ({ fila, columna, color }) => {
     return <Pieza texto="&#9820;" color={color} />;
 };
 
-Torre.puedeMoverse = function(celda, fichaActiva, fichas) {
-    let mismaFila = celda.fila === fichaActiva.fila;
-    let mismaColumna = celda.columna === fichaActiva.columna;
-
-    if (mismaFila || mismaColumna) {
-        let fichaDestino = fichas.find(
-            (ficha) =>
-                ficha.fila === celda.fila && ficha.columna === celda.columna
-        );
-
-        if (fichaDestino && fichaActiva.color === fichaDestino.color) {
-            // No puede comerse una ficha del mismo color
-            return false;
-        }
-
-        // No puede pasar por encima de ninguna ficha, comprobamos si hay fichas en el camino
-        if (mismaFila) {
-        } else if (mismaColumna) {
-        }
-
-        return true;
-    }
-
-    return false;
-};
-
 Torre.calcularCeldasDestino = function(fichaActiva, fichas) {
     // Calculamos todas las celdas de destino posibles
-    return [];
+    let celdasDestino = [];
+
+    // Comprobamos hacia la izquierda
+    for (let columna = fichaActiva.columna - 1; columna >= 0; columna--) {
+        let fichaDestino = fichas.find(
+            (ficha) =>
+                ficha.fila === fichaActiva.fila && ficha.columna === columna
+        );
+
+        if (fichaDestino) {
+            if (fichaDestino.color !== fichaActiva.color) {
+                // Si hay ficha del otro color, puede comer
+                celdasDestino.push({
+                    fila: fichaActiva.fila,
+                    columna: columna,
+                });
+            }
+
+            // Si habia ficha, no puede avanzar más en esta direccion
+            break;
+        } else {
+            // Si no hay ficha, puede moverse
+            celdasDestino.push({
+                fila: fichaActiva.fila,
+                columna: columna,
+            });
+        }
+    }
+
+    // Comprobamos hacia la derecha
+    for (let columna = fichaActiva.columna + 1; columna <= 8; columna++) {
+        let fichaDestino = fichas.find(
+            (ficha) =>
+                ficha.fila === fichaActiva.fila && ficha.columna === columna
+        );
+
+        if (fichaDestino) {
+            if (fichaDestino.color !== fichaActiva.color) {
+                // Si hay ficha del otro color, puede comer
+                celdasDestino.push({
+                    fila: fichaActiva.fila,
+                    columna: columna,
+                });
+            }
+
+            // Si habia ficha, no puede avanzar más en esta direccion
+            break;
+        } else {
+            // Si no hay ficha, puede moverse
+            celdasDestino.push({
+                fila: fichaActiva.fila,
+                columna: columna,
+            });
+        }
+    }
+
+    // Comprobamos hacia arriba
+    for (let fila = fichaActiva.fila + 1; fila <= 8; fila++) {
+        let fichaDestino = fichas.find(
+            (ficha) =>
+                ficha.fila === fila && ficha.columna === fichaActiva.columna
+        );
+
+        if (fichaDestino) {
+            if (fichaDestino.color !== fichaActiva.color) {
+                // Si hay ficha del otro color, puede comer
+                celdasDestino.push({
+                    fila: fila,
+                    columna: fichaActiva.columna,
+                });
+            }
+
+            // Si habia ficha, no puede avanzar más en esta direccion
+            break;
+        } else {
+            // Si no hay ficha, puede moverse
+            celdasDestino.push({
+                fila: fila,
+                columna: fichaActiva.columna,
+            });
+        }
+    }
+
+    // Comprobamos hacia abajo
+    for (let fila = fichaActiva.fila - 1; fila >= 0; fila--) {
+        let fichaDestino = fichas.find(
+            (ficha) =>
+                ficha.fila === fila && ficha.columna === fichaActiva.columna
+        );
+
+        if (fichaDestino) {
+            if (fichaDestino.color !== fichaActiva.color) {
+                // Si hay ficha del otro color, puede comer
+                celdasDestino.push({
+                    fila: fila,
+                    columna: fichaActiva.columna,
+                });
+            }
+
+            // Si habia ficha, no puede avanzar más en esta direccion
+            break;
+        } else {
+            // Si no hay ficha, puede moverse
+            celdasDestino.push({
+                fila: fila,
+                columna: fichaActiva.columna,
+            });
+        }
+    }
+
+    return celdasDestino;
 };
 
 export default Torre;

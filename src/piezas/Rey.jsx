@@ -7,7 +7,9 @@ const Rey = ({ fila, columna, color }) => {
 
 Rey.calcularCeldasDestino = function(fichaActiva, fichas) {
     // Calculamos todas las celdas de destino posibles
-    return [];
+    let celdasDestino = [];
+
+    return celdasDestino;
 };
 
 export default Rey;

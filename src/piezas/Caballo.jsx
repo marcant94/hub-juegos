@@ -9,9 +9,6 @@ Caballo.calcularCeldasDestino = function(fichaActiva, fichas) {
     // Calculamos todas las celdas de destino posibles
     let celdasDestino = [];
 
-    // console.clear();
-    console.log("iniciamos");
-
     for (let i = -2; i <= 2; i++) {
         for (let j = -2; j <= 2; j++) {
             let fila = fichaActiva.fila + i;
