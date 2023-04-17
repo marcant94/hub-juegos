@@ -10,7 +10,7 @@ Torre.calcularCeldasDestino = function(fichaActiva, fichas) {
     let celdasDestino = [];
 
     // Comprobamos hacia la izquierda
-    for (let columna = fichaActiva.columna - 1; columna >= 0; columna--) {
+    for (let columna = fichaActiva.columna - 1; columna >= 1; columna--) {
         let fichaDestino = fichas.find(
             (ficha) =>
                 ficha.fila === fichaActiva.fila && ficha.columna === columna
@@ -91,7 +91,7 @@ Torre.calcularCeldasDestino = function(fichaActiva, fichas) {
     }
 
     // Comprobamos hacia abajo
-    for (let fila = fichaActiva.fila - 1; fila >= 0; fila--) {
+    for (let fila = fichaActiva.fila - 1; fila >= 1; fila--) {
         let fichaDestino = fichas.find(
             (ficha) =>
                 ficha.fila === fila && ficha.columna === fichaActiva.columna
