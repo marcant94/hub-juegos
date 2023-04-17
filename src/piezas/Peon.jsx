@@ -5,65 +5,76 @@ const Peon = ({ fila, columna, color }) => {
     return <Pieza texto="&#9823;" color={color} />;
 };
 
-Peon.puedeMoverse = function(celda, fichaActiva, fichas) {
-    let mover1 = fichaActiva.color === "B" ? 1 : -1;
-    let mover2 = fichaActiva.color === "B" ? 2 : -2;
-    if (celda.columna === fichaActiva.columna) {
-        if (celda.fila === fichaActiva.fila + mover1) {
-            let fichaDelante = fichas.find(
-                (ficha) =>
-                    ficha.fila === fichaActiva.fila + mover1 &&
-                    ficha.columna === fichaActiva.columna
-            );
+Peon.calcularCeldasDestino = function(fichaActiva, fichas) {
+    // Calculamos todas las celdas de destino posibles
+    let celdasDestino = [];
+    let direccion = fichaActiva.color === "B" ? 1 : -1;
+    let direccionDoble = fichaActiva.color === "B" ? 2 : -2;
 
-            if (fichaDelante) {
-                return false;
-            }
+    // Comprobamos las 2 celdas de delante
+    let fichaDelante = fichas.find(
+        (ficha) =>
+            ficha.fila === fichaActiva.fila + direccion &&
+            ficha.columna === fichaActiva.columna
+    );
 
-            // Solo puede moverse si no hay ninguna ficha delante
-            return true;
-        } else if (
-            fichaActiva.movimientos === 0 &&
-            celda.fila === fichaActiva.fila + mover2
-        ) {
-            let fichaDelante = fichas.find(
-                (ficha) =>
-                    ficha.fila === fichaActiva.fila + mover1 &&
-                    ficha.columna === fichaActiva.columna
-            );
-
-            let fichaFinal = fichas.find(
-                (ficha) =>
-                    ficha.fila === fichaActiva.fila + mover2 &&
-                    ficha.columna === fichaActiva.columna
-            );
-
-            if (fichaDelante || fichaFinal) {
-                return false;
-            }
-
-            // Solo puede moverse si no hay ninguna ficha en el camino
-            return true;
-        }
-    } else if (
-        celda.fila === fichaActiva.fila + mover1 &&
-        (fichaActiva.columna === celda.columna + 1 ||
-            fichaActiva.columna === celda.columna - 1)
-    ) {
-        // Si hay una ficha delante en diagonal, puede comer
-        let fichaDelante = fichas.find(
-            (ficha) =>
-                ficha.fila === celda.fila && ficha.columna === celda.columna
-        );
-
-        if (fichaDelante && fichaDelante.color !== fichaActiva.color) {
-            return true;
-        }
+    if (!fichaDelante) {
+        celdasDestino.push({
+            fila: fichaActiva.fila + direccion,
+            columna: fichaActiva.columna,
+        });
     }
-    // else if () { // Captura al paso
-    // }
 
-    return false;
+    let fichaSiguiente = fichas.find(
+        (ficha) =>
+            ficha.fila === fichaActiva.fila + direccionDoble &&
+            ficha.columna === fichaActiva.columna
+    );
+
+    if (!fichaSiguiente) {
+        celdasDestino.push({
+            fila: fichaActiva.fila + direccionDoble,
+            columna: fichaActiva.columna,
+        });
+    }
+
+    // Comprobamos las 2 celdas en diagonal
+    let fichaDiagonalIzquierda = fichas.find(
+        (ficha) =>
+            ficha.fila === fichaActiva.fila + direccion &&
+            ficha.columna === fichaActiva.columna - 1
+    );
+
+    if (
+        fichaDiagonalIzquierda &&
+        fichaDiagonalIzquierda.color !== fichaActiva.color
+    ) {
+        celdasDestino.push({
+            fila: fichaDiagonalIzquierda.fila,
+            columna: fichaDiagonalIzquierda.columna,
+        });
+    }
+
+    let fichaDiagonalDerecha = fichas.find(
+        (ficha) =>
+            ficha.fila === fichaActiva.fila + direccion &&
+            ficha.columna === fichaActiva.columna + 1
+    );
+
+    if (
+        fichaDiagonalDerecha &&
+        fichaDiagonalDerecha.color !== fichaActiva.color
+    ) {
+        celdasDestino.push({
+            fila: fichaDiagonalDerecha.fila,
+            columna: fichaDiagonalDerecha.columna,
+        });
+    }
+
+
+    // Comprobar captura en paso
+
+    return celdasDestino;
 };
 
 export default Peon;

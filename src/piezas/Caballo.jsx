@@ -5,27 +5,43 @@ const Caballo = ({ fila, columna, color }) => {
     return <Pieza texto="&#9822;" color={color} />;
 };
 
-Caballo.puedeMoverse = function(celda, fichaActiva, fichas) {
-    let difColumna = Math.abs(celda.columna - fichaActiva.columna);
-    let difFila = Math.abs(celda.fila - fichaActiva.fila);
+Caballo.calcularCeldasDestino = function(fichaActiva, fichas) {
+    // Calculamos todas las celdas de destino posibles
+    let celdasDestino = [];
 
-    if (
-        (difColumna === 1 && difFila === 2) ||
-        (difColumna === 2 && difFila === 1)
-    ) {
-        let fichaDestino = fichas.find(
-            (ficha) =>
-                ficha.fila === celda.fila && ficha.columna === celda.columna
-        );
+    // console.clear();
+    console.log("iniciamos");
 
-        if (fichaDestino && fichaActiva.color === fichaDestino.color) {
-            return false;
+    for (let i = -2; i <= 2; i++) {
+        for (let j = -2; j <= 2; j++) {
+            let fila = fichaActiva.fila + i;
+            let columna = fichaActiva.columna + j;
+
+            let difColumna = Math.abs(columna - fichaActiva.columna);
+            let difFila = Math.abs(fila - fichaActiva.fila);
+
+            if (
+                (difColumna === 1 && difFila === 2) ||
+                (difColumna === 2 && difFila === 1)
+            ) {
+                let fichaDestino = fichas.find(
+                    (ficha) => ficha.fila === fila && ficha.columna === columna
+                );
+
+                if (
+                    !(fichaDestino && fichaActiva.color === fichaDestino.color)
+                ) {
+                    // No puede comerse una ficha del mismo color
+                    celdasDestino.push({
+                        fila: fila,
+                        columna: columna,
+                    });
+                }
+            }
         }
-
-        return true;
     }
 
-    return false;
+    return celdasDestino;
 };
 
 export default Caballo;

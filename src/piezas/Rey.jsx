@@ -5,8 +5,9 @@ const Rey = ({ fila, columna, color }) => {
     return <Pieza texto="&#9818;" color={color} />;
 };
 
-Rey.puedeMoverse = function(celda, fichaActiva) {
-    return false;
+Rey.calcularCeldasDestino = function(fichaActiva, fichas) {
+    // Calculamos todas las celdas de destino posibles
+    return [];
 };
 
 export default Rey;

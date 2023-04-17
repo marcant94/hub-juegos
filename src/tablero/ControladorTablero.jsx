@@ -66,11 +66,18 @@ const ControladorTablero = ({
         let hayActivo = Object.keys(activo).length;
         let fichaActiva = undefined;
 
+        let posiblesCeldasDestino = [];
+
         if (hayActivo) {
             fichaActiva = fichas.find(
                 (ficha) =>
                     ficha.fila === activo.fila &&
                     ficha.columna === activo.columna
+            );
+
+            posiblesCeldasDestino = fichaActiva.pieza.calcularCeldasDestino(
+                fichaActiva,
+                fichas
             );
         }
 
@@ -90,13 +97,14 @@ const ControladorTablero = ({
                 let celdaEstaSeleccionada =
                     celda.fila === activo.fila &&
                     celda.columna === activo.columna;
+
                 if (hayActivo && !celdaEstaSeleccionada) {
-                    // Comprobamos si la ficha se puede mover hasta aqui
-                    puedeLlegar = fichaActiva.pieza.puedeMoverse(
-                        celda,
-                        fichaActiva,
-                        fichas
-                    );
+                    puedeLlegar =
+                        posiblesCeldasDestino.findIndex(
+                            (celdaDestino) =>
+                                celdaDestino.fila === celda.fila &&
+                                celdaDestino.columna == celda.columna
+                        ) >= 0;
                 }
 
                 if (fichaEnEstaCelda) {
