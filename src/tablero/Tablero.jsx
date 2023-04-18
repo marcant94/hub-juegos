@@ -349,7 +349,10 @@ const Tablero = (props) => {
 
             {/* Menu seleccion colores de tablero y de fichas */}
             {/* Mostrar fichas comidas */}
-            {/* Añadir transiciones cortas al mover las fichas */}
+            {/* Añadir transiciones cortas al mover las fichas (No deberian situarse dentro de las celdas, sino de manera absoluta) */}
+            {/* Comprobar posible jaque en cada movimiento permitido (No permitir jugadas ilegales) */}
+            {/* Añadir movimiento de captura en paso */}
+
             <ControladorTablero
                 key="elcontrolador"
                 tableroFichas={tableroFichas}
