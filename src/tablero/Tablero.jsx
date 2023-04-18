@@ -82,7 +82,7 @@ function generarFichas() {
             color: "B",
             pieza: Peon,
             nombrePieza: "Peon",
-            movimientos: 0,
+            
         });
     }
 
@@ -94,7 +94,7 @@ function generarFichas() {
             color: "N",
             pieza: Peon,
             nombrePieza: "Peon",
-            movimientos: 0,
+            
         });
     }
 
@@ -105,7 +105,7 @@ function generarFichas() {
         color: "N",
         pieza: Torre,
         nombrePieza: "Torre",
-        movimientos: 0,
+        
     });
     fichasIniciales.push({
         fila: 8,
@@ -113,7 +113,7 @@ function generarFichas() {
         color: "N",
         pieza: Torre,
         nombrePieza: "Torre",
-        movimientos: 0,
+        
     });
 
     fichasIniciales.push({
@@ -122,7 +122,7 @@ function generarFichas() {
         color: "B",
         pieza: Torre,
         nombrePieza: "Torre",
-        movimientos: 0,
+        
     });
     fichasIniciales.push({
         fila: 1,
@@ -130,7 +130,7 @@ function generarFichas() {
         color: "B",
         pieza: Torre,
         nombrePieza: "Torre",
-        movimientos: 0,
+        
     });
 
     // Generamos los caballos
@@ -140,7 +140,7 @@ function generarFichas() {
         color: "N",
         pieza: Caballo,
         nombrePieza: "Caballo",
-        movimientos: 0,
+        
     });
     fichasIniciales.push({
         fila: 8,
@@ -148,7 +148,7 @@ function generarFichas() {
         color: "N",
         pieza: Caballo,
         nombrePieza: "Caballo",
-        movimientos: 0,
+        
     });
 
     fichasIniciales.push({
@@ -157,7 +157,7 @@ function generarFichas() {
         color: "B",
         pieza: Caballo,
         nombrePieza: "Caballo",
-        movimientos: 0,
+        
     });
     fichasIniciales.push({
         fila: 1,
@@ -165,7 +165,7 @@ function generarFichas() {
         color: "B",
         pieza: Caballo,
         nombrePieza: "Caballo",
-        movimientos: 0,
+        
     });
 
     // Generamos los alfiles
@@ -175,7 +175,7 @@ function generarFichas() {
         color: "N",
         pieza: Alfil,
         nombrePieza: "Alfil",
-        movimientos: 0,
+        
     });
     fichasIniciales.push({
         fila: 8,
@@ -183,7 +183,7 @@ function generarFichas() {
         color: "N",
         pieza: Alfil,
         nombrePieza: "Alfil",
-        movimientos: 0,
+        
     });
 
     fichasIniciales.push({
@@ -192,7 +192,7 @@ function generarFichas() {
         color: "B",
         pieza: Alfil,
         nombrePieza: "Alfil",
-        movimientos: 0,
+        
     });
     fichasIniciales.push({
         fila: 1,
@@ -200,7 +200,7 @@ function generarFichas() {
         color: "B",
         pieza: Alfil,
         nombrePieza: "Alfil",
-        movimientos: 0,
+        
     });
 
     // Generamos los reyes y reinas
@@ -210,7 +210,7 @@ function generarFichas() {
         color: "N",
         pieza: Rey,
         nombrePieza: "Rey",
-        movimientos: 0,
+        
     });
     fichasIniciales.push({
         fila: 8,
@@ -218,7 +218,7 @@ function generarFichas() {
         color: "N",
         pieza: Reina,
         nombrePieza: "Reina",
-        movimientos: 0,
+        
     });
 
     fichasIniciales.push({
@@ -227,7 +227,7 @@ function generarFichas() {
         color: "B",
         pieza: Rey,
         nombrePieza: "Rey",
-        movimientos: 0,
+        
     });
     fichasIniciales.push({
         fila: 1,
@@ -235,8 +235,16 @@ function generarFichas() {
         color: "B",
         pieza: Reina,
         nombrePieza: "Reina",
-        movimientos: 0,
+        
     });
+
+    for (let index = 0; index < fichasIniciales.length; index++) {
+        let pieza = fichasIniciales[index];
+        pieza["id"] =
+            pieza.nombrePieza + "_f" + pieza.fila + "_c" + pieza.columna;
+            pieza.movimientos = 0;
+            pieza.eliminada = false;
+    }
 
     return fichasIniciales;
 }
@@ -350,7 +358,8 @@ const Tablero = (props) => {
             {/* Menu seleccion colores de tablero y de fichas */}
             {/* Mostrar fichas comidas */}
             {/* Añadir transiciones cortas al mover las fichas (No deberian situarse dentro de las celdas, sino de manera absoluta) */}
-            {/* Comprobar posible jaque en cada movimiento permitido (No permitir jugadas ilegales) */}
+            {/* Comprobar posible jaque en cada movimiento permitido y el ganador (No permitir jugadas ilegales) */}
+            {/* Comprobar si un jugador pierde por ahogado y el ganador */}
             {/* Añadir movimiento de captura en paso */}
 
             <ControladorTablero

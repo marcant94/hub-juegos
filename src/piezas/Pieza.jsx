@@ -2,13 +2,28 @@ import React from "react";
 
 import estilos from "./Pieza.module.css";
 
-const Pieza = ({ texto, color }) => {
+const Pieza = ({ texto, ficha }) => {
+    // ficha:
+    // color
+    // columna
+    // fila
+    // id
+    // movimientos
+    // nombrePieza
+
     return (
         <span
+            key={ficha.id}
+            style={{
+                left: ficha.columna * 65 + "px",
+                bottom: ficha.fila * 65 - 17 + "px",
+            }}
             className={
                 estilos.pieza +
                 " " +
-                (color === "B" ? estilos.blanca : estilos.negra)
+                (ficha.eliminada ? estilos.eliminada : "") +
+                " " +
+                (ficha.color === "B" ? estilos.blanca : estilos.negra)
             }
         >
             {texto}

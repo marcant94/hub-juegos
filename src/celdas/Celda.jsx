@@ -5,7 +5,8 @@ import estilos from "./Celda.module.css";
 const Celda = ({
     fila,
     columna,
-    ficha,
+    // ficha,
+    tieneFicha = false,
     pulsarCelda,
     seleccionado,
     puedeLlegar,
@@ -19,7 +20,7 @@ const Celda = ({
                 " " +
                 (fila % 2 === 0 ? estilos.filaPar : estilos.filaImpar) +
                 " " +
-                (ficha ? estilos.celdaConFicha : "") +
+                (tieneFicha ? estilos.celdaConFicha : "") +
                 " " +
                 (seleccionado ? estilos.celdaSeleccionada : "") +
                 " " +
@@ -31,7 +32,7 @@ const Celda = ({
                 {fila}
                 {letra}
             </div>
-            {ficha ? <ficha.pieza color={ficha.color} /> : undefined}
+            {/* {ficha ? <ficha.pieza color={ficha.color} /> : undefined} */}
         </div>
     );
 };

@@ -1,4 +1,5 @@
 :local(.tablaFlex) {
+    position: relative;
     margin: 0 auto;
     width: fit-content;
     background-color: white;

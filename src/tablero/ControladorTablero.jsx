@@ -23,34 +23,31 @@ const ControladorTablero = ({
     }
 
     function moverFicha(fichaOrigen, celdaDestino) {
-        // let nuevasFichas = clonar(fichas);
-        let nuevasFichas = fichas.filter((ficha, indice) => {
-            // Eliminamos la ficha origen
-            if (
+        let nuevasFichas = clonar(fichas);
+
+        let fichaMovida = nuevasFichas.find(
+            (ficha) =>
                 ficha.fila === fichaOrigen.fila &&
                 ficha.columna === fichaOrigen.columna
-            ) {
-                return;
-            }
+        );
 
-            // Si habia una ficha en la celda destino, ha sido comida
-            if (
+        // Si habia una ficha en la celda destino, ha sido comida
+        let fichaComida = nuevasFichas.find(
+            (ficha) =>
                 ficha.fila === celdaDestino.fila &&
                 ficha.columna === celdaDestino.columna
-            ) {
-                return;
-            }
+        );
 
-            return ficha;
-        });
+        if (fichaComida) {
+            fichaComida.eliminada = true;
+            fichaComida.fila = -10;
+            fichaComida.columna = -10;
+        }
 
-        let nuevaFicha = clonar(fichaOrigen);
-
-        nuevaFicha.movimientos++;
-        nuevaFicha.fila = celdaDestino.fila;
-        nuevaFicha.columna = celdaDestino.columna;
-
-        nuevasFichas.push(nuevaFicha);
+        // Movemos la ficha seleccionada
+        fichaMovida.movimientos++;
+        fichaMovida.fila = celdaDestino.fila;
+        fichaMovida.columna = celdaDestino.columna;
 
         setActivo({});
         setMovimientos(movimientos + 1);
@@ -62,7 +59,6 @@ const ControladorTablero = ({
     }
 
     function pintarTablero() {
-        let indice = -1;
         let hayActivo = Object.keys(activo).length;
         let fichaActiva = undefined;
 
@@ -81,7 +77,8 @@ const ControladorTablero = ({
             );
         }
 
-        return tableroFichas.map((celda) => {
+        let indice = -1;
+        let lista_filas_celdas = tableroFichas.map((celda) => {
             indice++;
 
             if (typeof celda.type === "string") {
@@ -128,7 +125,8 @@ const ControladorTablero = ({
                             key={indice++}
                             fila={celda.fila}
                             columna={celda.columna}
-                            ficha={fichaEnEstaCelda}
+                            // ficha={fichaEnEstaCelda}
+                            tieneFicha={true}
                             seleccionado={celdaEstaSeleccionada}
                         />
                     );
@@ -155,6 +153,14 @@ const ControladorTablero = ({
                 }
             }
         });
+
+        fichas.forEach((ficha) => {
+            lista_filas_celdas.push(
+                <ficha.pieza key={ficha.id} ficha={ficha} />
+            );
+        });
+
+        return lista_filas_celdas;
     }
 
     return <div className={estilos.tablaFlex}>{pintarTablero()}</div>;

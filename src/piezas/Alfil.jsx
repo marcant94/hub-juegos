@@ -1,8 +1,8 @@
 import React from "react";
 import Pieza from "./Pieza";
 
-const Alfil = ({ fila, columna, color }) => {
-    return <Pieza texto="&#9821;" color={color} />;
+const Alfil = ({ ficha }) => {
+    return <Pieza texto="&#9821;" ficha={ficha} />;
 };
 
 Alfil.calcularCeldasDestino = function(fichaActiva, fichas) {

@@ -14,6 +14,21 @@
     user-select: none;
 }
 
+.eliminada {
+    opacity: 0;
+}
+
 .pieza {
-    transition: font-size 350ms;
+    height: 65px;
+    width: 65px;
+    line-height: 65px;
+    font-size: 2.75rem;
+    text-align: center;
+    font-weight: normal;
+
+    position: absolute;
+    transition: all 750ms;
+    /* pointer-events: none; */
+    /* border: 1px solid red; */
+    box-sizing: border-box;
 }

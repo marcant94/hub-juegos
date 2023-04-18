@@ -1,8 +1,8 @@
 import React from "react";
 import Pieza from "./Pieza";
 
-const Peon = ({ fila, columna, color }) => {
-    return <Pieza texto="&#9823;" color={color} />;
+const Peon = ({ ficha }) => {
+    return <Pieza texto="&#9823;" ficha={ficha} />;
 };
 
 Peon.calcularCeldasDestino = function(fichaActiva, fichas) {
