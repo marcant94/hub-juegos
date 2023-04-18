@@ -82,7 +82,6 @@ function generarFichas() {
             color: "B",
             pieza: Peon,
             nombrePieza: "Peon",
-            
         });
     }
 
@@ -94,7 +93,6 @@ function generarFichas() {
             color: "N",
             pieza: Peon,
             nombrePieza: "Peon",
-            
         });
     }
 
@@ -105,7 +103,6 @@ function generarFichas() {
         color: "N",
         pieza: Torre,
         nombrePieza: "Torre",
-        
     });
     fichasIniciales.push({
         fila: 8,
@@ -113,7 +110,6 @@ function generarFichas() {
         color: "N",
         pieza: Torre,
         nombrePieza: "Torre",
-        
     });
 
     fichasIniciales.push({
@@ -122,7 +118,6 @@ function generarFichas() {
         color: "B",
         pieza: Torre,
         nombrePieza: "Torre",
-        
     });
     fichasIniciales.push({
         fila: 1,
@@ -130,7 +125,6 @@ function generarFichas() {
         color: "B",
         pieza: Torre,
         nombrePieza: "Torre",
-        
     });
 
     // Generamos los caballos
@@ -140,7 +134,6 @@ function generarFichas() {
         color: "N",
         pieza: Caballo,
         nombrePieza: "Caballo",
-        
     });
     fichasIniciales.push({
         fila: 8,
@@ -148,7 +141,6 @@ function generarFichas() {
         color: "N",
         pieza: Caballo,
         nombrePieza: "Caballo",
-        
     });
 
     fichasIniciales.push({
@@ -157,7 +149,6 @@ function generarFichas() {
         color: "B",
         pieza: Caballo,
         nombrePieza: "Caballo",
-        
     });
     fichasIniciales.push({
         fila: 1,
@@ -165,7 +156,6 @@ function generarFichas() {
         color: "B",
         pieza: Caballo,
         nombrePieza: "Caballo",
-        
     });
 
     // Generamos los alfiles
@@ -175,7 +165,6 @@ function generarFichas() {
         color: "N",
         pieza: Alfil,
         nombrePieza: "Alfil",
-        
     });
     fichasIniciales.push({
         fila: 8,
@@ -183,7 +172,6 @@ function generarFichas() {
         color: "N",
         pieza: Alfil,
         nombrePieza: "Alfil",
-        
     });
 
     fichasIniciales.push({
@@ -192,7 +180,6 @@ function generarFichas() {
         color: "B",
         pieza: Alfil,
         nombrePieza: "Alfil",
-        
     });
     fichasIniciales.push({
         fila: 1,
@@ -200,7 +187,6 @@ function generarFichas() {
         color: "B",
         pieza: Alfil,
         nombrePieza: "Alfil",
-        
     });
 
     // Generamos los reyes y reinas
@@ -210,7 +196,6 @@ function generarFichas() {
         color: "N",
         pieza: Rey,
         nombrePieza: "Rey",
-        
     });
     fichasIniciales.push({
         fila: 8,
@@ -218,7 +203,6 @@ function generarFichas() {
         color: "N",
         pieza: Reina,
         nombrePieza: "Reina",
-        
     });
 
     fichasIniciales.push({
@@ -227,7 +211,6 @@ function generarFichas() {
         color: "B",
         pieza: Rey,
         nombrePieza: "Rey",
-        
     });
     fichasIniciales.push({
         fila: 1,
@@ -235,15 +218,14 @@ function generarFichas() {
         color: "B",
         pieza: Reina,
         nombrePieza: "Reina",
-        
     });
 
     for (let index = 0; index < fichasIniciales.length; index++) {
         let pieza = fichasIniciales[index];
         pieza["id"] =
             pieza.nombrePieza + "_f" + pieza.fila + "_c" + pieza.columna;
-            pieza.movimientos = 0;
-            pieza.eliminada = false;
+        pieza.movimientos = 0;
+        pieza.eliminada = false;
     }
 
     return fichasIniciales;
@@ -332,7 +314,7 @@ const Tablero = (props) => {
     let textoTurno = movimientos % 2 === 0 ? "Blancas" : "Negras";
 
     return (
-        <div className={estilos.contenedorTablero}>
+        <div className={estilos.contenedorApp}>
             <div className={estilos.appbar}>
                 <div>
                     <b>Ajedrez React</b>
@@ -362,18 +344,22 @@ const Tablero = (props) => {
             {/* Comprobar si un jugador pierde por ahogado y el ganador */}
             {/* Añadir movimiento de captura en paso */}
 
-            <ControladorTablero
-                key="elcontrolador"
-                tableroFichas={tableroFichas}
-                setTableroFichas={setTableroFichas}
-                fichas={fichas}
-                setFichas={setFichas}
-                movimientos={movimientos}
-                setMovimientos={setMovimientos}
-                activo={activo}
-                setActivo={setActivo}
-                turno={turno}
-            />
+            <div className={estilos.contenedorTablero}>
+                <div className={estilos.cajaTablero}>
+                    <ControladorTablero
+                        key="elcontrolador"
+                        tableroFichas={tableroFichas}
+                        setTableroFichas={setTableroFichas}
+                        fichas={fichas}
+                        setFichas={setFichas}
+                        movimientos={movimientos}
+                        setMovimientos={setMovimientos}
+                        activo={activo}
+                        setActivo={setActivo}
+                        turno={turno}
+                    />
+                </div>
+            </div>
         </div>
     );
 };

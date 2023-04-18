@@ -1,3 +1,21 @@
+:local(.contenedorApp) {
+    margin-top: 60px;
+}
+
+:local(.contenedorTablero) {
+    position: relative;
+    width: 200px;
+    overflow: visible;
+    height: 200px;
+    margin: auto;
+}
+
+:local(.cajaTablero) {
+    position: absolute;
+    left: -200%;
+    right: -200%;
+}
+
 :local(.tablaFlex) {
     position: relative;
     margin: 0 auto;
@@ -13,6 +31,9 @@
 
 :local(.celdaFila),
 :local(.celdaFilaFin) {
+    height: 65px;
+    width: 65px;
+    line-height: 65px;
     text-align: center;
     align-self: center;
     font-weight: bold;
@@ -24,10 +45,6 @@
     margin: 10px 0px;
     font-weight: bold;
     font-size: 1.5rem;
-}
-
-:local(.contenedorTablero) {
-    margin-top: 60px;
 }
 
 :local(.appbar) {
@@ -56,25 +73,31 @@
 }
 
 @media screen and (max-width: 768px) {
-    :local(.celdaFila),
-    :local(.celdaFilaFin) {
-        font-size: 1.25rem;
-    }
-
-    :local(.celdaColumna) {
-        margin: 5px 0px;
-        font-size: 1.25rem;
+    :local(.contenedorTablero) {
+        scale: 75%;
     }
 }
 
-@media screen and (max-width: 480px) {
-    :local(.celdaFila),
-    :local(.celdaFilaFin) {
-        font-size: 1rem;
+@media screen and (max-width: 520px) {
+    :local(.contenedorTablero) {
+        scale: 65%;
     }
+}
 
-    :local(.celdaColumna) {
-        margin: 2px 0px;
-        font-size: 1rem;
+@media screen and (max-width: 470px) {
+    :local(.contenedorTablero) {
+        scale: 55%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    :local(.contenedorTablero) {
+        scale: 45%;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    :local(.contenedorTablero) {
+        scale: 35%;
     }
 }
