@@ -14,10 +14,17 @@ const Pieza = ({ texto, ficha }) => {
     return (
         <span
             key={ficha.id}
-            style={{
-                left: ficha.columna * 65 + "px",
-                bottom: ficha.fila * 65 - 17 + "px",
-            }}
+            style={
+                ficha.eliminada
+                    ? {
+                          bottom: "570px",
+                          left: "0px",
+                      }
+                    : {
+                          bottom: ficha.fila * 65 - 17 + "px",
+                          left: ficha.columna * 65 + "px",
+                      }
+            }
             className={
                 estilos.pieza +
                 " " +

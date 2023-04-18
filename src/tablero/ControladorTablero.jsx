@@ -40,8 +40,8 @@ const ControladorTablero = ({
 
         if (fichaComida) {
             fichaComida.eliminada = true;
-            fichaComida.fila = -10;
-            fichaComida.columna = -10;
+            fichaComida.fila = -1;
+            fichaComida.columna = -1;
         }
 
         // Movemos la ficha seleccionada
