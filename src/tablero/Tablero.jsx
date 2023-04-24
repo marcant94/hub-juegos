@@ -339,7 +339,6 @@ const Tablero = (props) => {
 
             {/* Menu seleccion colores de tablero y de fichas */}
             {/* Mostrar fichas comidas */}
-            {/* Añadir transiciones cortas al mover las fichas (No deberian situarse dentro de las celdas, sino de manera absoluta) */}
             {/* Comprobar posible jaque en cada movimiento permitido y el ganador (No permitir jugadas ilegales) */}
             {/* Comprobar si un jugador pierde por ahogado y el ganador */}
             {/* Añadir movimiento de captura en paso */}
