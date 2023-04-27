@@ -337,12 +337,6 @@ const Tablero = (props) => {
                 </Boton>
             </div>
 
-            {/* Menu seleccion colores de tablero y de fichas */}
-            {/* Mostrar fichas comidas */}
-            {/* Comprobar posible jaque en cada movimiento permitido y el ganador (No permitir jugadas ilegales) */}
-            {/* Comprobar si un jugador pierde por ahogado y el ganador */}
-            {/* Añadir movimiento de captura en paso */}
-
             <div className={estilos.contenedorTablero}>
                 <div className={estilos.cajaTablero}>
                     <ControladorTablero
