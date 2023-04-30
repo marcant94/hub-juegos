@@ -4,16 +4,7 @@ import estilos from "./Tablero.module.css";
 import Celda from "../celdas/Celda";
 import { clonar } from "../utilidades";
 
-const ControladorTablero = ({
-    turno,
-    tableroFichas,
-    fichas,
-    setFichas,
-    movimientos,
-    setMovimientos,
-    activo,
-    setActivo,
-}) => {
+const ControladorTablero = ({ turno, tableroFichas, fichas, setFichas, movimientos, setMovimientos, activo, setActivo }) => {
     function seleccionarFicha(celda, evento) {
         if (activo.fila === celda.fila && activo.columna === celda.columna) {
             setActivo({});
@@ -25,18 +16,10 @@ const ControladorTablero = ({
     function moverFicha(fichaOrigen, celdaDestino) {
         let nuevasFichas = clonar(fichas);
 
-        let fichaMovida = nuevasFichas.find(
-            (ficha) =>
-                ficha.fila === fichaOrigen.fila &&
-                ficha.columna === fichaOrigen.columna
-        );
+        let fichaMovida = nuevasFichas.find(ficha => ficha.fila === fichaOrigen.fila && ficha.columna === fichaOrigen.columna);
 
         // Si habia una ficha en la celda destino, ha sido comida
-        let fichaComida = nuevasFichas.find(
-            (ficha) =>
-                ficha.fila === celdaDestino.fila &&
-                ficha.columna === celdaDestino.columna
-        );
+        let fichaComida = nuevasFichas.find(ficha => ficha.fila === celdaDestino.fila && ficha.columna === celdaDestino.columna);
 
         if (fichaComida) {
             fichaComida.eliminada = true;
@@ -65,43 +48,26 @@ const ControladorTablero = ({
         let posiblesCeldasDestino = [];
 
         if (hayActivo) {
-            fichaActiva = fichas.find(
-                (ficha) =>
-                    ficha.fila === activo.fila &&
-                    ficha.columna === activo.columna
-            );
+            fichaActiva = fichas.find(ficha => ficha.fila === activo.fila && ficha.columna === activo.columna);
 
-            posiblesCeldasDestino = fichaActiva.pieza.calcularCeldasDestino(
-                fichaActiva,
-                fichas
-            );
+            posiblesCeldasDestino = fichaActiva.pieza.calcularCeldasDestino(fichaActiva, fichas);
         }
 
         let indice = -1;
-        let lista_filas_celdas = tableroFichas.map((celda) => {
+        let lista_filas_celdas = tableroFichas.map(celda => {
             indice++;
 
             if (typeof celda.type === "string") {
                 return celda;
             } else {
-                let fichaEnEstaCelda = fichas.find(
-                    (ficha) =>
-                        ficha.fila === celda.fila &&
-                        ficha.columna === celda.columna
-                );
+                let fichaEnEstaCelda = fichas.find(ficha => ficha.fila === celda.fila && ficha.columna === celda.columna);
                 let puedeLlegar = false;
 
-                let celdaEstaSeleccionada =
-                    celda.fila === activo.fila &&
-                    celda.columna === activo.columna;
+                let celdaEstaSeleccionada = celda.fila === activo.fila && celda.columna === activo.columna;
 
                 if (hayActivo && !celdaEstaSeleccionada) {
                     puedeLlegar =
-                        posiblesCeldasDestino.findIndex(
-                            (celdaDestino) =>
-                                celdaDestino.fila === celda.fila &&
-                                celdaDestino.columna == celda.columna
-                        ) >= 0;
+                        posiblesCeldasDestino.findIndex(celdaDestino => celdaDestino.fila === celda.fila && celdaDestino.columna == celda.columna) >= 0;
                 }
 
                 if (fichaEnEstaCelda) {
@@ -111,11 +77,7 @@ const ControladorTablero = ({
                     } else if (fichaEnEstaCelda.color === turno) {
                         funcionPulsar = seleccionarFicha.bind(this, celda);
                     } else if (puedeLlegar) {
-                        funcionPulsar = moverFicha.bind(
-                            this,
-                            fichaActiva,
-                            celda
-                        );
+                        funcionPulsar = moverFicha.bind(this, fichaActiva, celda);
                     }
 
                     return (
@@ -133,11 +95,7 @@ const ControladorTablero = ({
                 } else {
                     let funcionPulsar = undefined;
                     if (puedeLlegar) {
-                        funcionPulsar = moverFicha.bind(
-                            this,
-                            fichaActiva,
-                            celda
-                        );
+                        funcionPulsar = moverFicha.bind(this, fichaActiva, celda);
                     }
 
                     return (
@@ -154,10 +112,8 @@ const ControladorTablero = ({
             }
         });
 
-        fichas.forEach((ficha) => {
-            lista_filas_celdas.push(
-                <ficha.pieza key={ficha.id} ficha={ficha} />
-            );
+        fichas.forEach(ficha => {
+            lista_filas_celdas.push(<ficha.pieza key={ficha.id} ficha={ficha} />);
         });
 
         return lista_filas_celdas;

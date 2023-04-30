@@ -9,7 +9,7 @@ const Celda = ({
     tieneFicha = false,
     pulsarCelda,
     seleccionado,
-    puedeLlegar,
+    puedeLlegar
 }) => {
     let letra = String.fromCharCode(columna - 1 + "A".charCodeAt(0));
 

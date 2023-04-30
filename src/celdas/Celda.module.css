@@ -1,3 +1,33 @@
+:global(.tableroGris) :local(.filaPar):nth-child(even),
+:global(.tableroGris) :local(.filaImpar):nth-child(odd) {
+    background-color: #b7c0d8;
+}
+
+:global(.tableroGris) :local(.filaPar):nth-child(odd),
+:global(.tableroGris) :local(.filaImpar):nth-child(even) {
+    background-color: #e8edf9;
+}
+
+:global(.tableroVerde) :local(.filaPar):nth-child(even),
+:global(.tableroVerde) :local(.filaImpar):nth-child(odd) {
+    background-color: #779556;
+}
+
+:global(.tableroVerde) :local(.filaPar):nth-child(odd),
+:global(.tableroVerde) :local(.filaImpar):nth-child(even) {
+    background-color: #ebecd0;
+}
+
+:global(.tableroMarron) :local(.filaPar):nth-child(even),
+:global(.tableroMarron) :local(.filaImpar):nth-child(odd) {
+    background-color: #96743d;
+}
+
+:global(.tableroMarron) :local(.filaPar):nth-child(odd),
+:global(.tableroMarron) :local(.filaImpar):nth-child(even) {
+    background-color: #caab7c;
+}
+
 :local(.celda) {
     position: relative;
     height: 65px;
@@ -24,20 +54,6 @@
 
 :local(.celdaSeleccionada) {
     background-color: #b1a7fc !important;
-}
-
-:local(.filaPar):nth-child(even),
-:local(.filaImpar):nth-child(odd) {
-    background-color: #b7c0d8;
-    /* background-color: #caab7c; */
-    /* background-color: #ebecd0; */
-}
-
-:local(.filaPar):nth-child(odd),
-:local(.filaImpar):nth-child(even) {
-    background-color: #e8edf9;
-    /* background-color: #96743d; */
-    /* background-color: #779556; */
 }
 
 :local(.celdaConFicha) {

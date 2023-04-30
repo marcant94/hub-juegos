@@ -20,10 +20,7 @@ function generarTableroVacio() {
         let letra = String.fromCharCode(columna + "A".charCodeAt(0));
 
         tableroVacio.push(
-            <div
-                key={"celdaLetraArriba" + columna}
-                className={estilos.celdaColumna}
-            >
+            <div key={"celdaLetraArriba" + columna} className={estilos.celdaColumna}>
                 {letra}
             </div>
         );
@@ -40,7 +37,7 @@ function generarTableroVacio() {
         for (let columna = 1; columna <= 8; columna++) {
             let celda = {
                 fila: fila,
-                columna: columna,
+                columna: columna
             };
 
             tableroVacio.push(celda);
@@ -58,10 +55,7 @@ function generarTableroVacio() {
         let letra = String.fromCharCode(columna + "A".charCodeAt(0));
 
         tableroVacio.push(
-            <div
-                key={"celdaLetraAbajo" + columna}
-                className={estilos.celdaColumna}
-            >
+            <div key={"celdaLetraAbajo" + columna} className={estilos.celdaColumna}>
                 {letra}
             </div>
         );
@@ -81,7 +75,7 @@ function generarFichas() {
             columna: index,
             color: "B",
             pieza: Peon,
-            nombrePieza: "Peon",
+            nombrePieza: "Peon"
         });
     }
 
@@ -92,7 +86,7 @@ function generarFichas() {
             columna: index,
             color: "N",
             pieza: Peon,
-            nombrePieza: "Peon",
+            nombrePieza: "Peon"
         });
     }
 
@@ -102,14 +96,14 @@ function generarFichas() {
         columna: 1,
         color: "N",
         pieza: Torre,
-        nombrePieza: "Torre",
+        nombrePieza: "Torre"
     });
     fichasIniciales.push({
         fila: 8,
         columna: 8,
         color: "N",
         pieza: Torre,
-        nombrePieza: "Torre",
+        nombrePieza: "Torre"
     });
 
     fichasIniciales.push({
@@ -117,14 +111,14 @@ function generarFichas() {
         columna: 1,
         color: "B",
         pieza: Torre,
-        nombrePieza: "Torre",
+        nombrePieza: "Torre"
     });
     fichasIniciales.push({
         fila: 1,
         columna: 8,
         color: "B",
         pieza: Torre,
-        nombrePieza: "Torre",
+        nombrePieza: "Torre"
     });
 
     // Generamos los caballos
@@ -133,14 +127,14 @@ function generarFichas() {
         columna: 2,
         color: "N",
         pieza: Caballo,
-        nombrePieza: "Caballo",
+        nombrePieza: "Caballo"
     });
     fichasIniciales.push({
         fila: 8,
         columna: 7,
         color: "N",
         pieza: Caballo,
-        nombrePieza: "Caballo",
+        nombrePieza: "Caballo"
     });
 
     fichasIniciales.push({
@@ -148,14 +142,14 @@ function generarFichas() {
         columna: 2,
         color: "B",
         pieza: Caballo,
-        nombrePieza: "Caballo",
+        nombrePieza: "Caballo"
     });
     fichasIniciales.push({
         fila: 1,
         columna: 7,
         color: "B",
         pieza: Caballo,
-        nombrePieza: "Caballo",
+        nombrePieza: "Caballo"
     });
 
     // Generamos los alfiles
@@ -164,14 +158,14 @@ function generarFichas() {
         columna: 3,
         color: "N",
         pieza: Alfil,
-        nombrePieza: "Alfil",
+        nombrePieza: "Alfil"
     });
     fichasIniciales.push({
         fila: 8,
         columna: 6,
         color: "N",
         pieza: Alfil,
-        nombrePieza: "Alfil",
+        nombrePieza: "Alfil"
     });
 
     fichasIniciales.push({
@@ -179,14 +173,14 @@ function generarFichas() {
         columna: 3,
         color: "B",
         pieza: Alfil,
-        nombrePieza: "Alfil",
+        nombrePieza: "Alfil"
     });
     fichasIniciales.push({
         fila: 1,
         columna: 6,
         color: "B",
         pieza: Alfil,
-        nombrePieza: "Alfil",
+        nombrePieza: "Alfil"
     });
 
     // Generamos los reyes y reinas
@@ -195,14 +189,14 @@ function generarFichas() {
         columna: 5,
         color: "N",
         pieza: Rey,
-        nombrePieza: "Rey",
+        nombrePieza: "Rey"
     });
     fichasIniciales.push({
         fila: 8,
         columna: 4,
         color: "N",
         pieza: Reina,
-        nombrePieza: "Reina",
+        nombrePieza: "Reina"
     });
 
     fichasIniciales.push({
@@ -210,20 +204,19 @@ function generarFichas() {
         columna: 5,
         color: "B",
         pieza: Rey,
-        nombrePieza: "Rey",
+        nombrePieza: "Rey"
     });
     fichasIniciales.push({
         fila: 1,
         columna: 4,
         color: "B",
         pieza: Reina,
-        nombrePieza: "Reina",
+        nombrePieza: "Reina"
     });
 
     for (let index = 0; index < fichasIniciales.length; index++) {
         let pieza = fichasIniciales[index];
-        pieza["id"] =
-            pieza.nombrePieza + "_f" + pieza.fila + "_c" + pieza.columna;
+        pieza["id"] = pieza.nombrePieza + "_f" + pieza.fila + "_c" + pieza.columna;
         pieza.movimientos = 0;
         pieza.eliminada = false;
     }
@@ -231,15 +224,20 @@ function generarFichas() {
     return fichasIniciales;
 }
 
-const Tablero = (props) => {
+const Tablero = props => {
     function iniciarJuego(cargaInicial = false) {
         let arrayFichas = null;
         let movimientosInicial = 0;
 
         if (cargaInicial) {
-            const local_movimientos = JSON.parse(
-                localStorage.getItem("movimientos")
-            );
+            const local_movimientos = JSON.parse(localStorage.getItem("movimientos"));
+
+            const local_color_tablero = localStorage.getItem("colorTablero");
+            if (local_color_tablero) {
+                setColorTablero(local_color_tablero);
+            } else {
+                localStorage.setItem("colorTablero", "tableroGris");
+            }
 
             if (local_movimientos) {
                 const local_fichas = JSON.parse(localStorage.getItem("fichas"));
@@ -247,7 +245,7 @@ const Tablero = (props) => {
                 arrayFichas = local_fichas;
                 movimientosInicial = local_movimientos;
 
-                arrayFichas.forEach((ficha) => {
+                arrayFichas.forEach(ficha => {
                     switch (ficha.nombrePieza) {
                         case "Alfil":
                             ficha.pieza = Alfil;
@@ -283,12 +281,20 @@ const Tablero = (props) => {
         setActivo({});
     }
 
+    function cambiarColorTablero(event) {
+        let nuevoValor = event.target.value;
+        setColorTablero(nuevoValor);
+        localStorage.setItem("colorTablero", nuevoValor);
+    }
+
     const isMounted = useRef(false);
 
     const [tableroFichas, setTableroFichas] = useState([]);
     const [fichas, setFichas] = useState([]);
     const [activo, setActivo] = useState({});
     const [movimientos, setMovimientos] = useState(0);
+
+    const [colorTablero, setColorTablero] = useState("tableroGris");
 
     useEffect(() => {
         if (!isMounted.current) {
@@ -323,22 +329,33 @@ const Tablero = (props) => {
                 <span className={estilos.separadorDerecha}></span>
 
                 <span>
+                    <select color="red" onChange={cambiarColorTablero}>
+                        <option value="tableroGris" selected={"tableroGris" === colorTablero}>
+                            Gris
+                        </option>
+                        <option value="tableroVerde" selected={"tableroVerde" === colorTablero}>
+                            Verde
+                        </option>
+                        <option value="tableroMarron" selected={"tableroMarron" === colorTablero}>
+                            Marrón
+                        </option>
+                    </select>
+                </span>
+
+                <span>
                     <b>Turno:</b> {textoTurno}
                 </span>
                 <span>
                     <b>Movimientos:</b> {movimientos}
                 </span>
 
-                <Boton
-                    desactivado={movimientos === 0}
-                    fnClick={iniciarJuego.bind(this, false)}
-                >
+                <Boton desactivado={movimientos === 0} fnClick={iniciarJuego.bind(this, false)}>
                     Reiniciar
                 </Boton>
             </div>
 
             <div className={estilos.contenedorTablero}>
-                <div className={estilos.cajaTablero}>
+                <div className={estilos.cajaTablero + " " + colorTablero}>
                     <ControladorTablero
                         key="elcontrolador"
                         tableroFichas={tableroFichas}
