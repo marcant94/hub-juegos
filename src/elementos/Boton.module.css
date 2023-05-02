@@ -107,3 +107,23 @@
 :local(.materialButton):disabled::after {
     opacity: 0;
 }
+
+@media screen and (max-width: 768px) {
+    :local(.materialButton) {
+        padding: 0 8px;
+        min-width: 38px;
+        height: 32px;
+        font-size: 12px;
+        line-height: 30px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    :local(.materialButton) {
+        padding: 0 6px;
+        min-width: 32px;
+        height: 26px;
+        font-size: 10px;
+        line-height: 20px;
+    }
+}

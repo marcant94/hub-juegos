@@ -69,22 +69,53 @@
 }
 
 :local(.separadorDerecha) {
-    margin-left: auto;
+    margin-left: auto !important;
 }
 
 @media screen and (max-width: 768px) {
+    :local(.contenedorApp) {
+        margin-top: 40px;
+    }
+
+    :local(.appbar) {
+        padding: 3px 15px;
+        font-size: 0.85rem;
+    }
+
+    :local(.appbar) > * + * {
+        margin-left: 15px;
+    }
+
     :local(.contenedorTablero) {
         scale: 75%;
     }
 }
 
 @media screen and (max-width: 520px) {
+    :local(.contenedorApp) {
+        margin-top: 15px;
+    }
+
+    :local(.appbar) {
+        height: 40px;
+        padding: 2px 10px;
+        font-size: 0.75rem;
+    }
+
+    :local(.appbar) > * + * {
+        margin-left: 10px;
+    }
+
     :local(.contenedorTablero) {
         scale: 65%;
     }
 }
 
 @media screen and (max-width: 470px) {
+    :local(.contenedorApp) {
+        margin-top: 5px;
+    }
+
     :local(.contenedorTablero) {
         scale: 55%;
     }
