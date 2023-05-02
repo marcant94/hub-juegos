@@ -19,6 +19,7 @@
 :local(.tablaFlex) {
     position: relative;
     margin: 0 auto;
+    margin-bottom: 3%;
     width: fit-content;
     background-color: white;
     border-radius: 15px;
