@@ -5,7 +5,7 @@
 :local(.contenedorTablero) {
     position: relative;
     width: 200px;
-    overflow: visible;
+    overflow-x: visible;
     height: 200px;
     margin: auto;
 }
