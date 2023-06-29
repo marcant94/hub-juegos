@@ -28,7 +28,7 @@ class CacheBuster extends React.Component {
     }
 
     refreshCacheAndReload = (fallo = false) => {
-        console.log("Clearing cache and reloading app...");
+        console.log("Reloading app...");
         let cacheBorrada = false;
 
         // try {
@@ -86,15 +86,14 @@ class CacheBuster extends React.Component {
 
         if (response.status >= 200 && response.status < 300) {
             const meta = await response.json();
-
             const latestVersion = meta.version;
 
             const shouldForceRefresh = semverGreaterThan(latestVersion, packageJson.version);
             if (shouldForceRefresh) {
-                console.log(`We have a new version - ${latestVersion} > ${packageJson.version}. It is necessary to clear the cache.`);
+                console.log(`We have a new version - ${latestVersion} > ${packageJson.version}. It is necessary to reload.`);
                 this.setState({ loading: false, isLatestVersion: false });
             } else {
-                console.log(`You have the latest version available - ${latestVersion} - ${packageJson.version}. No need to refresh the cache.`);
+                console.log(`You have the latest version available - ${latestVersion} - ${packageJson.version}. No need to reload.`);
                 this.setState({ loading: false, isLatestVersion: true });
             }
 
