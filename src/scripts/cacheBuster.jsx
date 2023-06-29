@@ -81,7 +81,8 @@ class CacheBuster extends React.Component {
 
         let response = await fetch("meta.json?f=" + new Date().getTime(), {
             method: "GET",
-            mode: "no-cors"
+            mode: "no-cors",
+            cache: "no-cache"
         });
 
         if (response.status >= 200 && response.status < 300) {
