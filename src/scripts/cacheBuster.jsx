@@ -88,14 +88,13 @@ class CacheBuster extends React.Component {
             const meta = await response.json();
 
             const latestVersion = meta.version;
-            const currentVersion = packageJson.version;
 
-            const shouldForceRefresh = semverGreaterThan(latestVersion, currentVersion);
+            const shouldForceRefresh = semverGreaterThan(latestVersion, packageJson.version);
             if (shouldForceRefresh) {
-                console.log(`We have a new version - ${latestVersion} > ${currentVersion}. It is necessary to clear the cache.`);
+                console.log(`We have a new version - ${latestVersion} > ${packageJson.version}. It is necessary to clear the cache.`);
                 this.setState({ loading: false, isLatestVersion: false });
             } else {
-                console.log(`You have the latest version available - ${latestVersion} - ${currentVersion}. No need to refresh the cache.`);
+                console.log(`You have the latest version available - ${latestVersion} - ${packageJson.version}. No need to refresh the cache.`);
                 this.setState({ loading: false, isLatestVersion: true });
             }
 
@@ -115,7 +114,7 @@ class CacheBuster extends React.Component {
         }
 
         if (!okMeta) {
-            console.log(`Unknown previous version. Refresh the application.`);
+            console.log(`Unknown previous version. Current version: ${packageJson.version}. Refresh the application.`);
             this.setState({ loading: false, isLatestVersion: true });
             this.refreshCacheAndReload(true);
         }
