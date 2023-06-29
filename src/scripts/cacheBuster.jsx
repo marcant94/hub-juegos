@@ -79,7 +79,7 @@ class CacheBuster extends React.Component {
             return true;
         }
 
-        let response = await fetch("/meta.json?f=" + new Date().getTime(), {
+        let response = await fetch("meta.json?f=" + new Date().getTime(), {
             method: "GET",
             mode: "no-cors"
         });
