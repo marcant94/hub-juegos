@@ -115,7 +115,7 @@ class CacheBuster extends React.Component {
         }
 
         if (!okMeta) {
-            console.log(`Versión anterior desconocida. Refresh the application.`);
+            console.log(`Unknown previous version. Refresh the application.`);
             this.setState({ loading: false, isLatestVersion: true });
             this.refreshCacheAndReload(true);
         }
