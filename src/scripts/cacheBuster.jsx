@@ -27,57 +27,106 @@ class CacheBuster extends React.Component {
         };
     }
 
-    refreshCacheAndReload = (reload = true) => {
-        console.log("Limpiando cache y recargando aplicación...");
+    refreshCacheAndReload = (fallo = false) => {
+        console.log("Clearing cache and reloading app...");
+        let cacheBorrada = false;
 
-        try {
-            if (caches) {
-                // Service worker cache should be cleared with caches.delete()
-                caches.keys().then(function(names) {
-                    for (let name of names) caches.delete(name);
-                });
+        // try {
+        //     if (caches) {
+        //         // Service worker cache should be cleared with caches.delete()
+        //         caches.keys().then(function(names) {
+        //             for (let name of names) caches.delete(name);
+        //         });
+        //     }
+        //     cacheBorrada = true;
+        // } catch (error) {
+        //     console.log("Cache Error:", error);
+        // }
+        // Temporalmente, no borraremos la cache, da problemas en Chromium y derivados:
+        //      Chrome
+        //      Edge
+        //      Opera
+        cacheBorrada = true;
+
+        if (cacheBorrada) {
+            // console.log("Cache cleared");
+            if (fallo) {
+                // Solo recargamos la pagina 1 vez si hemos borrado la cache
+                let app_refresh = window.localStorage.getItem("app_refresh");
+
+                if (app_refresh) {
+                    console.log("Page is already updated");
+                } else {
+                    console.log("Reload page");
+                    window.localStorage.setItem("app_refresh", true);
+                    window.location.reload(true);
+                }
+            } else {
+                // Se ha borrado la cache y hay una versión más nueva, recargamos la página.
+                window.localStorage.removeItem("app_refresh");
+                window.location.reload(true);
             }
-        } catch (error) {}
-
-        if (reload) {
-            // delete browser cache and hard reload
-            window.location.reload(true);
+        } else {
+            // console.log("Cache not cleared");
+            // alert("Error update version");
         }
     };
 
-    componentDidMount() {
+    async comprobarVersion() {
         if (process.env.NODE_ENV !== "production") {
             // Solo comprobamos la versión en producción.
             this.setState({ loading: false, isLatestVersion: true });
-            return;
+            return true;
         }
 
-        // Traemos siempre el meta.json sin cachear para tener la última versión.
-        fetch("./meta.json?f=" + new Date().getTime())
-            .then(response => response.json())
-            .then(meta => {
-                const latestVersion = meta.version;
-                const currentVersion = packageJson.version;
+        let response = await fetch("/meta.json?f=" + new Date().getTime(), {
+            method: "GET",
+            mode: "no-cors"
+        });
 
-                const shouldForceRefresh = semverGreaterThan(latestVersion, currentVersion);
-                if (shouldForceRefresh) {
-                    console.log(`Tenemos una nueva versión ${currentVersion} < ${latestVersion}. Debemos forzar el refresco de la aplicación.`);
-                    this.setState({ loading: false, isLatestVersion: false });
-                } else {
-                    console.log(`Tienes la última versión disponible - ${latestVersion}. No se necesita actualizar la caché.`);
-                    this.setState({ loading: false, isLatestVersion: true });
-                }
-            })
-            .catch(error => {
-                console.log(`Versión anterior desconocida. Forzamos el refresco de la aplicación.`);
-                this.refreshCacheAndReload(false);
+        if (response.status >= 200 && response.status < 300) {
+            const meta = await response.json();
+
+            const latestVersion = meta.version;
+            const currentVersion = packageJson.version;
+
+            const shouldForceRefresh = semverGreaterThan(latestVersion, currentVersion);
+            if (shouldForceRefresh) {
+                console.log(`We have a new version - ${latestVersion} > ${currentVersion}. It is necessary to clear the cache.`);
+                this.setState({ loading: false, isLatestVersion: false });
+            } else {
+                console.log(`You have the latest version available - ${latestVersion} - ${currentVersion}. No need to refresh the cache.`);
                 this.setState({ loading: false, isLatestVersion: true });
-            });
+            }
+
+            return true;
+        }
+
+        return false;
     }
+
+    async componentDidMount() {
+        let okMeta = false;
+
+        try {
+            okMeta = await this.comprobarVersion();
+        } catch (error) {
+            console.log("Error checking version:", error);
+        }
+
+        if (!okMeta) {
+            console.log(`Versión anterior desconocida. Refresh the application.`);
+            this.setState({ loading: false, isLatestVersion: true });
+            this.refreshCacheAndReload(true);
+        }
+    }
+
     render() {
-        const { loading, isLatestVersion } = this.state;
-        let refreshCacheAndReload = this.refreshCacheAndReload;
-        return this.props.children({ loading, isLatestVersion, refreshCacheAndReload });
+        return this.props.children({
+            loading: this.state.loading,
+            isLatestVersion: this.state.isLatestVersion,
+            refreshCacheAndReload: this.refreshCacheAndReload
+        });
     }
 }
 
