@@ -25,11 +25,11 @@ const serverParams = {
     open: false, // When false, it won't load your browser by default.
     host: "0.0.0.0", // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.
     // ignore: 'scss,my/templates', // comma-separated string for paths to ignore
-    ignore: "dist,build,node_modules",
-    file: "index.html" // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
+    ignore: "**.map,**.css",
+    file: "index.html", // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
     // wait: 1000, // Waits for all changes, before reloading. Defaults to 0 sec.
     // mount: [['/components', './node_modules']], // Mount a directory to a route.
-    // logLevel: 2, // 0 = errors only, 1 = some, 2 = lots
+    logLevel: 0 // 0 = errors only, 1 = some, 2 = lots
     // middleware: [function(req, res, next) { next(); }] // Takes an array of Connect-compatible middleware that are injected into the server middleware stack
 };
 
@@ -37,10 +37,12 @@ const serverParams = {
 if (fse.existsSync(carpetaDev)) {
     await fse.rm(carpetaDev, { recursive: true });
 }
+
+// Copy public folder
 await fse.copy("./public", carpetaDev);
 
 function info_dist() {
-    let lineaIp = "\r\nSirviendo desarrollo en: http://localhost:" + puerto;
+    let lineaIp = "\r\n\x1b[32mSirviendo desarrollo en: \x1b[34mhttp://localhost:" + puerto;
 
     var networkInterfaces = os.networkInterfaces();
     for (let indice in networkInterfaces) {
@@ -54,39 +56,45 @@ function info_dist() {
         }
     }
 
-    console.log(lineaIp);
+    console.log(lineaIp + "\x1b[0m");
     // if (hayCambios) console.log("Listo para cambios");
 }
 
 (async () => {
     // Build
-    const result = await esbuild.build(buildParams).catch(() => process.exit(1));
+    const ctx = await esbuild.context(buildParams);
+    try {
+        await ctx.rebuild();
+    } catch (err) {}
+    // await ctx.watch();
 
     // Start live server
-    liveServer.start(serverParams);
-    setTimeout(info_dist, 250);
+    await liveServer.start(serverParams);
+
+    info_dist();
 
     /**
      * Watch development server changes
      * ignored: ignore watch `.*` files
      */
+    const labelTime = "⚡ [esbuild chokidar] Done";
     return chokidar.watch(["src/**/*", "public/**/*"], { ignored: /(^|[/\\])\../, ignoreInitial: true }).on("all", async (event, path) => {
         if (event === "change" && path.includes(carpetaDev)) {
             // Nothing
         } else if (event === "change" && path.includes("public")) {
-            console.log(`⚡ [esbuild] change in public ${path}`);
+            console.log(`⚡ [esbuild chokidar] ${path}`);
             try {
                 fse.copySync("public", carpetaDev);
             } catch (err) {
                 console.error(err);
             }
         } else if (event === "change") {
-            console.log(`⚡ [esbuild] Rebuilding ${path}`);
-            console.time("⚡ [esbuild] Done");
-            if (result.rebuild) await result.rebuild();
-            console.timeEnd("⚡ [esbuild] Done");
-
-            setTimeout(info_dist, 250);
+            console.log(`⚡ [esbuild chokidar] Rebuilding ${path}`);
+            console.time(labelTime);
+            try {
+                await ctx.rebuild();
+            } catch (err) {}
+            console.timeEnd(labelTime);
         }
     });
 })();

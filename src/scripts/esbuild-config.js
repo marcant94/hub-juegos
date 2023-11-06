@@ -25,10 +25,13 @@ const buildParams = {
     minify: !isDev,
     // format: "cjs",
     format: "esm",
+    // platform: 'node',
+    // target: 'node16',
     bundle: true,
-    sourcemap: isDev, // "inline",
-    logLevel: isDev ? "info" : "error",
-    incremental: isDev,
+    // external: ['/node_modules/*'],
+    // outfile: './dist/index.js',
+    sourcemap: false, //isDev && "linked",
+    logLevel: isDev ? "info" : "error", // "info" by default
     splitting: true,
     plugins: [
         cssModulesPlugin({

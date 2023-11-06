@@ -24,24 +24,17 @@ class CacheBuster extends React.Component {
         };
     }
 
-    refreshCacheAndReload = (fallo = false) => {
-        console.log("Reloading app...");
+    refreshCacheAndReload = (forzar = false) => {
+        // console.log("Reloading app...");
 
-        if (fallo) {
-            // Solo recargamos la pagina 1 vez si hemos borrado la cache
-            let app_refresh = window.localStorage.getItem("app_refresh");
+        console.log("You need to refresh the page");
 
-            if (app_refresh) {
-                console.log("Page is already updated");
-            } else {
-                console.log("Updating page");
-                window.localStorage.setItem("app_refresh", true);
-                window.location.reload(true);
-            }
+        if (forzar) {
+            // console.log("Updating page");
+            // window.location.reload(true);
         } else {
             // Se ha borrado la cache y hay una versión más nueva, recargamos la página.
-            window.localStorage.removeItem("app_refresh");
-            window.location.reload(true);
+            // window.location.reload(true);
         }
     };
 
@@ -73,7 +66,7 @@ class CacheBuster extends React.Component {
                 this.setState({ loading: false, isLatestVersion: false });
             } else {
                 console.log(
-                    `You have the latest version available - ${latestVersion} - ${packageJson.version}. No need to reload.`
+                    `You have the latest version available - ${latestVersion}. No need to reload.`
                 );
                 this.setState({ loading: false, isLatestVersion: true });
             }

@@ -1,15 +1,13 @@
 {
     "name": "ajedrez-react",
-    "version": "0.2.3",
+    "version": "0.3.0",
     "private": true,
     "type": "module",
     "dependencies": {
-        "chokidar": "^3.5.3",
-        "esbuild": "^0.15.13",
+        "esbuild": "^0.17.19",
         "esbuild-css-modules-plugin": "^2.6.2",
         "file-saver": "^2.0.5",
         "fs-extra": "^10.1.0",
-        "live-server": "^1.2.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
@@ -42,7 +40,9 @@
         "setupTestFrameworkScriptFile": "<rootDir>/src/prepararJest.js"
     },
     "devDependencies": {
-        "prettier": "^1.16.4"
+        "prettier": "^1.16.4",
+        "chokidar": "^3.5.3",
+        "live-server": "^1.2.2"
     },
     "overrides": {
         "chokidar": "^3.5.3"
