@@ -21,10 +21,12 @@ const semverGreaterThan = (versionA, versionB) => {
 };
 
 const dameUrlBase = () => {
-    if (window.location.href.includes("ed-expansion")) {
-        return "/ed-expansion/";
-    } else {
+    if (window.location.pathname == "/") {
+        // Es Desarrollo
         return "/";
+    } else {
+        // Es GitLab Pages
+        return window.location.pathname;
     }
 };
 

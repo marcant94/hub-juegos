@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import estilos from "./App.module.css";
 import { ProveedorRuta } from "./elementos/ProveedorRuta";
 
-import TableroAjedrez from "./ajedrez/tablero/TableroAjedrez";
-import TableroBuscaminas from "./buscaminas/TableroBuscaminas";
+const TableroAjedrez = lazy(() => import("./ajedrez/tablero/TableroAjedrez"));
+const TableroBuscaminas = lazy(() => import("./buscaminas/TableroBuscaminas"));
+
 import NoMatch from "./noMatch/NoMatch";
 import Inicio from "./home/Inicio";
-import BaseAppbar from "./appbar/BaseAppbar";
 
 const App = props => {
     const isMounted = useRef(false);
@@ -33,7 +33,6 @@ const App = props => {
             case ruta === "?ajedrez":
                 // El tablero de ajedrez tiene su propio contenedor
                 return <TableroAjedrez />;
-                break;
 
             case ruta === "?buscaminas":
                 vista = <TableroBuscaminas />;
@@ -49,7 +48,9 @@ const App = props => {
 
     return (
         <ProveedorRuta.Provider value={setRuta}>
-            <div className={estilos.contenedorApp}>{pintarVista()}</div>
+            <div className={estilos.contenedorApp}>
+                <Suspense fallback={<Inicio />}>{pintarVista()}</Suspense>
+            </div>
         </ProveedorRuta.Provider>
     );
 };
