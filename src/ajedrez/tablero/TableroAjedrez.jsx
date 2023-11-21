@@ -224,7 +224,7 @@ function generarFichas() {
     return fichasIniciales;
 }
 
-const colores = [
+const coloresTablero = [
     {
         valor: "tableroGris",
         texto: "Gris"
@@ -238,6 +238,7 @@ const colores = [
         texto: "Marrón"
     }
 ];
+const colorTableroPredeterminado = coloresTablero[0].valor;
 
 const TableroAjedrez = props => {
     function iniciarJuego(cargaInicial = false) {
@@ -251,7 +252,7 @@ const TableroAjedrez = props => {
             if (local_color_tablero) {
                 setColorTablero(local_color_tablero);
             } else {
-                localStorage.setItem("colorTablero", "tableroGris");
+                localStorage.setItem("colorTablero", colorTableroPredeterminado);
             }
 
             if (local_movimientos) {
@@ -309,7 +310,7 @@ const TableroAjedrez = props => {
     const [activo, setActivo] = useState({});
     const [movimientos, setMovimientos] = useState(0);
 
-    const [colorTablero, setColorTablero] = useState("tableroGris");
+    const [colorTablero, setColorTablero] = useState(colorTableroPredeterminado);
 
     useEffect(() => {
         if (!isMounted.current) {
@@ -341,7 +342,7 @@ const TableroAjedrez = props => {
                     <>
                         <span>
                             <select value={colorTablero} onChange={cambiarColorTablero}>
-                                {colores.map((color, indice) => {
+                                {coloresTablero.map((color, indice) => {
                                     return (
                                         <option key={indice} value={color.valor}>
                                             {color.texto}
