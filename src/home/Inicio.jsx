@@ -7,13 +7,23 @@ const Inicio = props => {
     return (
         <>
             <BaseAppbar />
-            <Enlace to="?buscaminas" decoracion={false}>
-                Buscaminas
-            </Enlace>
-            <br />
-            <Enlace to="?ajedrez" decoracion={false}>
-                Ajedrez
-            </Enlace>
+
+            <ul>
+                <li>
+                    <p>
+                        <Enlace to="?buscaminas" decoracion={false}>
+                            Buscaminas
+                        </Enlace>
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        <Enlace to="?ajedrez" decoracion={false}>
+                            Ajedrez
+                        </Enlace>
+                    </p>
+                </li>
+            </ul>
         </>
     );
 };
