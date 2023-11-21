@@ -1,0 +1,8 @@
+:local(.enlace) {
+    cursor: pointer;
+}
+
+:local(.enlaceDecorado) {
+    color: blue;
+    text-decoration: underline;
+}

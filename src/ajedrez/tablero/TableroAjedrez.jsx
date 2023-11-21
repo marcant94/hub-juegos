@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import estilos from "./Tablero.module.css";
+import estilos from "./TableroAjedrez.module.css";
 import ControladorTablero from "./ControladorTablero";
+import BaseAppbar from "../../appbar/BaseAppbar";
 
 import Alfil from "../piezas/Alfil";
 import Caballo from "../piezas/Caballo";
@@ -9,8 +10,7 @@ import Peon from "../piezas/Peon";
 import Reina from "../piezas/Reina";
 import Rey from "../piezas/Rey";
 import Torre from "../piezas/Torre";
-
-import Boton from "../elementos/Boton";
+import Boton from "../../elementos/Boton";
 
 function generarTableroVacio() {
     let tableroVacio = [];
@@ -224,7 +224,7 @@ function generarFichas() {
     return fichasIniciales;
 }
 
-const Tablero = props => {
+const TableroAjedrez = props => {
     function iniciarJuego(cargaInicial = false) {
         let arrayFichas = null;
         let movimientosInicial = 0;
@@ -320,58 +320,58 @@ const Tablero = props => {
     let textoTurno = movimientos % 2 === 0 ? "Blancas" : "Negras";
 
     return (
-        <div className={estilos.contenedorApp}>
-            <div className={estilos.appbar}>
-                <div>
-                    <b>Ajedrez React</b>
+        <>
+            <BaseAppbar
+                extra={
+                    <>
+                        <span>
+                            <select color="red" onChange={cambiarColorTablero}>
+                                <option value="tableroGris" selected={"tableroGris" === colorTablero}>
+                                    Gris
+                                </option>
+                                <option value="tableroVerde" selected={"tableroVerde" === colorTablero}>
+                                    Verde
+                                </option>
+                                <option value="tableroMarron" selected={"tableroMarron" === colorTablero}>
+                                    Marrón
+                                </option>
+                            </select>
+                        </span>
+
+                        <span>
+                            <b>Turno:</b> {textoTurno}
+                        </span>
+                        <span>
+                            <b>Movimientos:</b> {movimientos}
+                        </span>
+
+                        <Boton desactivado={movimientos === 0} fnClick={iniciarJuego.bind(this, false)}>
+                            Reiniciar
+                        </Boton>
+                    </>
+                }
+            />
+
+            <div className={estilos.contenedorCajaTableroRelativo}>
+                <div className={estilos.contenedorCajaTableroAbsoluto}>
+                    <div className={estilos.cajaTablero + " " + colorTablero}>
+                        <ControladorTablero
+                            key="elcontrolador"
+                            tableroFichas={tableroFichas}
+                            setTableroFichas={setTableroFichas}
+                            fichas={fichas}
+                            setFichas={setFichas}
+                            movimientos={movimientos}
+                            setMovimientos={setMovimientos}
+                            activo={activo}
+                            setActivo={setActivo}
+                            turno={turno}
+                        />
+                    </div>
                 </div>
-
-                <span className={estilos.separadorDerecha}></span>
-
-                <span>
-                    <select color="red" onChange={cambiarColorTablero}>
-                        <option value="tableroGris" selected={"tableroGris" === colorTablero}>
-                            Gris
-                        </option>
-                        <option value="tableroVerde" selected={"tableroVerde" === colorTablero}>
-                            Verde
-                        </option>
-                        <option value="tableroMarron" selected={"tableroMarron" === colorTablero}>
-                            Marrón
-                        </option>
-                    </select>
-                </span>
-
-                <span>
-                    <b>Turno:</b> {textoTurno}
-                </span>
-                <span>
-                    <b>Movimientos:</b> {movimientos}
-                </span>
-
-                <Boton desactivado={movimientos === 0} fnClick={iniciarJuego.bind(this, false)}>
-                    Reiniciar
-                </Boton>
             </div>
-
-            <div className={estilos.contenedorTablero}>
-                <div className={estilos.cajaTablero + " " + colorTablero}>
-                    <ControladorTablero
-                        key="elcontrolador"
-                        tableroFichas={tableroFichas}
-                        setTableroFichas={setTableroFichas}
-                        fichas={fichas}
-                        setFichas={setFichas}
-                        movimientos={movimientos}
-                        setMovimientos={setMovimientos}
-                        activo={activo}
-                        setActivo={setActivo}
-                        turno={turno}
-                    />
-                </div>
-            </div>
-        </div>
+        </>
     );
 };
 
-export default Tablero;
+export default TableroAjedrez;

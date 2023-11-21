@@ -1,22 +1,56 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import Tablero from "./tablero/Tablero";
-import CacheBuster from "./scripts/cacheBuster";
+import estilos from "./App.module.css";
+import { ProveedorRuta } from "./elementos/ProveedorRuta";
 
-import "./App.css";
+import TableroAjedrez from "./ajedrez/tablero/TableroAjedrez";
+import TableroBuscaminas from "./buscaminas/TableroBuscaminas";
+import NoMatch from "./noMatch/NoMatch";
+import Inicio from "./home/Inicio";
+import BaseAppbar from "./appbar/BaseAppbar";
 
-const App = (props) => {
+const App = props => {
+    const isMounted = useRef(false);
+    const [ruta, setRuta] = useState(window.location.search);
+
+    useEffect(() => {
+        // Constructor
+        isMounted.current = true;
+    }, []);
+
+    function pintarVista() {
+        let vista;
+
+        switch (true) {
+            // case ruta.includes("?buscar="):
+            case ruta === "":
+            case ruta === "?":
+            case ruta === undefined:
+                // Generar Home
+                vista = <Inicio />;
+                break;
+
+            case ruta === "?ajedrez":
+                // El tablero de ajedrez tiene su propio contenedor
+                return <TableroAjedrez />;
+                break;
+
+            case ruta === "?buscaminas":
+                vista = <TableroBuscaminas />;
+                break;
+
+            default:
+                vista = <NoMatch />;
+                break;
+        }
+
+        return <div className={estilos.contenedorAplicacion}>{vista}</div>;
+    }
+
     return (
-        <CacheBuster>
-            {({ loading, isLatestVersion, refreshCacheAndReload }) => {
-                if (loading) return null;
-                if (!loading && !isLatestVersion) {
-                    refreshCacheAndReload();
-                }
-
-                return <Tablero />;
-            }}
-        </CacheBuster>
+        <ProveedorRuta.Provider value={setRuta}>
+            <div className={estilos.contenedorApp}>{pintarVista()}</div>
+        </ProveedorRuta.Provider>
     );
 };
 

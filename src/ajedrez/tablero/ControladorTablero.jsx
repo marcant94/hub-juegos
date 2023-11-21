@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import estilos from "./Tablero.module.css";
+import estilos from "./TableroAjedrez.module.css";
 import Celda from "../celdas/Celda";
-import { clonar } from "../utilidades";
+import { clonar } from "../../utilidades";
 
 const ControladorTablero = ({ turno, tableroFichas, fichas, setFichas, movimientos, setMovimientos, activo, setActivo }) => {
     function seleccionarFicha(celda, evento) {

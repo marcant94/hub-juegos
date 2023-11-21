@@ -1,0 +1,33 @@
+:global(body) {
+    background-color: #bbbbbb;
+    overflow-x: hidden;
+}
+
+:local(.contenedorApp) {
+    margin-top: 60px;
+}
+
+:local(.contenedorAplicacion) {
+    background-color: white;
+    width: fit-content;
+    min-width: 20%;
+    max-width: 1200px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgb(102, 102, 102);
+}
+
+
+/* @media screen and (max-width: 520px) {
+    :local(.contenedorApp) {
+        margin-top: 50px;
+    }
+} */
+
+/* @media screen and (max-width: 470px) {
+    :local(.contenedorApp) {
+        margin-top: 5px;
+    }
+} */
