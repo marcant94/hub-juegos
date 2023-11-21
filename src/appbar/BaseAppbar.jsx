@@ -7,6 +7,7 @@ import estilos from "./BaseAppbar.module.css";
 import { dameUrlBase, semverGreaterThan } from "../utilidades";
 import Enlace from "../elementos/Enlace";
 
+let static_hay_actualizacion, static_ultima_version;
 const BaseAppbar = props => {
     const isMounted = useRef(false);
     const [hayActualizacion, setHayActualizacion] = useState(true);
@@ -23,9 +24,12 @@ const BaseAppbar = props => {
             const meta = await response.json();
             const latestVersion = meta.version;
             setUltimaVersion(latestVersion);
+            static_ultima_version = latestVersion;
 
             let hayActualizacion = semverGreaterThan(latestVersion, packageJson.version);
             setHayActualizacion(hayActualizacion);
+
+            static_hay_actualizacion = hayActualizacion;
         }
     }
 
@@ -33,7 +37,12 @@ const BaseAppbar = props => {
         // Constructor
         isMounted.current = true;
 
-        recuperarVersion();
+        if (static_ultima_version !== undefined) {
+            setUltimaVersion(static_ultima_version);
+            setHayActualizacion(static_hay_actualizacion);
+        } else {
+            recuperarVersion();
+        }
     }, []);
 
     return (
