@@ -4,3 +4,5 @@
 - Comprobar si un jugador pierde por ahogado y el ganador
 - Añadir movimiento de captura en paso
 - Añadir movimiento de enroque
+
+- añadir carga lazy a cada vista
