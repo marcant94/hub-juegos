@@ -224,6 +224,21 @@ function generarFichas() {
     return fichasIniciales;
 }
 
+const colores = [
+    {
+        valor: "tableroGris",
+        texto: "Gris"
+    },
+    {
+        valor: "tableroVerde",
+        texto: "Verde"
+    },
+    {
+        valor: "tableroMarron",
+        texto: "Marrón"
+    }
+];
+
 const TableroAjedrez = props => {
     function iniciarJuego(cargaInicial = false) {
         let arrayFichas = null;
@@ -325,16 +340,14 @@ const TableroAjedrez = props => {
                 extra={
                     <>
                         <span>
-                            <select color="red" onChange={cambiarColorTablero}>
-                                <option value="tableroGris" selected={"tableroGris" === colorTablero}>
-                                    Gris
-                                </option>
-                                <option value="tableroVerde" selected={"tableroVerde" === colorTablero}>
-                                    Verde
-                                </option>
-                                <option value="tableroMarron" selected={"tableroMarron" === colorTablero}>
-                                    Marrón
-                                </option>
+                            <select value={colorTablero} onChange={cambiarColorTablero}>
+                                {colores.map((color, indice) => {
+                                    return (
+                                        <option key={indice} value={color.valor}>
+                                            {color.texto}
+                                        </option>
+                                    );
+                                })}
                             </select>
                         </span>
 
