@@ -57,10 +57,29 @@ const dameBusquedaMultiple = () => {
     }
 };
 
+const coloresTablero = [
+    {
+        valor: "tableroGris",
+        texto: "Gris",
+    },
+    {
+        valor: "tableroVerde",
+        texto: "Verde",
+    },
+    {
+        valor: "tableroMarron",
+        texto: "Marrón",
+    },
+];
+
+const colorTableroPredeterminado = coloresTablero[0].valor;
+
 export {
     clonar,
     semverGreaterThan,
     dameUrlBase,
     dameBusqueda,
     dameBusquedaMultiple,
+    coloresTablero,
+    colorTableroPredeterminado,
 };
