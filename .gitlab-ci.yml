@@ -7,12 +7,14 @@ pages:
             - node_modules/
             - yarn.lock
     script:
-        - npm install
-        - npm run build
-        - rm -Rf public
-        - mv build public
+        - yarn # npm install
+        - yarn build # npm run build
+        # - rm -Rf public
+        # - mv build public
     artifacts:
         paths:
-            - public
-    only:
-        - master
+            - build
+    rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    # only:
+    #     - master
