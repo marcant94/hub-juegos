@@ -11,6 +11,7 @@ pages:
         - yarn build # npm run build
         # - rm -Rf public
         # - mv build public
+    publish: build
     artifacts:
         paths:
             - build
