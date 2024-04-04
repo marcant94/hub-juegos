@@ -1,4 +1,4 @@
-image: node
+image: node:18-alpine
 
 pages:
     stage: deploy
@@ -9,13 +9,9 @@ pages:
     script:
         - yarn --prod
         - yarn build
-        # - rm -Rf public
-        # - mv build public
     publish: build
     artifacts:
         paths:
-            - build # public
+            - build
     rules:
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-    # only:
-    #     - master

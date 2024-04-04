@@ -1,0 +1,21 @@
+version: "3"
+services:
+    juegos_react_dev:
+        container_name: juegos_react_dev
+        image: node:18-alpine
+        working_dir: /app
+        command:
+            - /bin/sh
+            - -c
+            - |
+                yarn
+                yarn dev
+        ports:
+            - 4000:4000
+        tty: true
+        restart: on-failure
+        # restart: unless-stopped
+        volumes:
+            - ./:/app
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro

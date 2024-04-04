@@ -1,6 +1,6 @@
 {
     "name": "ajedrez-react",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "private": true,
     "type": "module",
     "dependencies": {
@@ -29,8 +29,8 @@
         "lint": "eslint \"src/**/*.{js,jsx}\" --max-warnings=0",
         "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
         "build": "node ./src/scripts/build.js",
-        "start": "node ./src/scripts/dev.js --port=4000",
-        "dev": "npm run start"
+        "dev": "node ./src/scripts/dev.js --port=4000",
+        "start": "npm run dev"
     },
     " jest ": {
         " automock ": true,
