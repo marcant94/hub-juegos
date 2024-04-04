@@ -28,7 +28,7 @@ services:
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         ports:
-            - 80:80
+            - 8000:80
         restart: unless-stopped
         depends_on:
             - juegos_react_compiler
