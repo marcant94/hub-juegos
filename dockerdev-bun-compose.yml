@@ -1,15 +1,16 @@
-version: "3"
+name: prueba_react
 services:
-    juegos_react_dev:
-        container_name: juegos_react_dev
-        image: node:18-alpine
+    juegos_react_dev_bun:
+        container_name: juegos_react_dev_bun
+        # image: oven/bun:slim
+        image: oven/bun:alpine
         working_dir: /app
         command:
             - /bin/sh
             - -c
             - |
-                yarn
-                yarn dev
+                bun install
+                bun run dev
         ports:
             - 4000:4000
         tty: true
