@@ -1,11 +1,13 @@
 import esbuild from "esbuild";
-// import { config } from "dotenv";
 import fse from "fs-extra";
 import { buildParams, carpetaProd } from "./esbuild-config.js";
-import packageJson from "../../package.json" assert { type: "json" };
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const packageJson = require("../../package.json");
+
 
 const build = async () => {
-    // config();
     if (fse.existsSync(carpetaProd)) {
         await fse.rm(carpetaProd, { recursive: true });
     }

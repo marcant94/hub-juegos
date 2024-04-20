@@ -1,6 +1,9 @@
 /* generate-build-version.js */
 import fs from "fs";
-import packageJson from "../../package.json" assert { type: "json" };
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const packageJson = require("../../package.json");
 
 const jsonData = {
     version: packageJson.version
