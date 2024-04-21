@@ -2,7 +2,7 @@ version: "3"
 services:
     juegos_react_dev:
         container_name: juegos_react_dev
-        image: node:18-alpine
+        image: node:20-alpine
         working_dir: /app
         command:
             - /bin/sh
