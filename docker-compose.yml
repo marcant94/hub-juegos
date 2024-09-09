@@ -1,0 +1,24 @@
+name: juegos_react
+
+services:
+
+    juegos_react:
+        container_name: juegos_react
+        image: juegos_react_imagen
+        build: 
+            context: ./
+            dockerfile: ./Dockerfile
+        tty: true
+        command:
+            - /bin/sh
+            - -c
+            - |
+                mv /build/* /cache/ -R
+                nginx -g 'daemon off;'
+        volumes:
+            - ./cache:/cache
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        ports:
+            - 80:80
+        # restart: unless-stopped
