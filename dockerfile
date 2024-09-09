@@ -18,8 +18,9 @@ WORKDIR /app
 # COPY ./package*.json ./
 
 COPY . .
-RUN mv /app/nodebuild/yarn.lock /app/yarn.lock -f; exit 0
-RUN mv /app/nodebuild/node_modules /app/node_modules -f; exit 0
+RUN mv -f /app/nodebuild/yarn.lock /app/; exit 0
+RUN mv -f /app/nodebuild/node_modules /app/; exit 0
+
 
 RUN yarn --prod
 RUN yarn build
