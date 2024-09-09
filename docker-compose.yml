@@ -16,7 +16,7 @@ services:
                 mv /build/* /nodebuild/ -R
                 nginx -g 'daemon off;'
         volumes:
-            - ./cache:/cache
+            - ./nodebuild:/nodebuild
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         ports:
