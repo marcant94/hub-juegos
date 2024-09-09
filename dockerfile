@@ -16,8 +16,10 @@ WORKDIR /app
 
 # COPY ./package.json ./
 # COPY ./package*.json ./
+
 COPY . .
-RUN mv /app/nodebuild /app
+RUN mv /app/nodebuild/node_modules /app/node_modules
+RUN mv /app/nodebuild/yarn.lock /app/yarn.lock
 
 RUN yarn --prod
 RUN yarn build
@@ -26,8 +28,8 @@ RUN yarn build
 # production environment
 FROM nginx:stable-alpine
 
-COPY --from=build /app/node_modules /build/node_modules
-COPY --from=build /app/yarn.lock /build/yarn.lock
+COPY --from=build /app/node_modules /tmp/node_modules
+COPY --from=build /app/yarn.lock /tmp/yarn.lock
 COPY --from=build /app/build /html
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
