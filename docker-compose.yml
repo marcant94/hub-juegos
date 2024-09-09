@@ -13,7 +13,7 @@ services:
             - /bin/sh
             - -c
             - |
-                mv /build/* /nodebuild/ -R
+                mv /build/* /nodebuild/
                 nginx -g 'daemon off;'
         volumes:
             - ./nodebuild:/nodebuild
