@@ -17,7 +17,7 @@ WORKDIR /app
 # COPY ./package.json ./
 # COPY ./package*.json ./
 COPY . .
-RUN mv /app/cache/* /app
+RUN mv /app/nodebuild/* /app
 
 RUN yarn --prod
 RUN yarn build
