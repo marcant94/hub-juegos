@@ -13,9 +13,9 @@ services:
             - /bin/sh
             - -c
             - |
-                nginx -g 'daemon off;'
                 mv /tmp/node_modules /nodebuild/node_modules
                 mv /tmp/yarn.lock /nodebuild/yarn.lock
+                nginx -g 'daemon off;'
         volumes:
             - ./nodebuild:/nodebuild
             - /etc/timezone:/etc/timezone:ro
