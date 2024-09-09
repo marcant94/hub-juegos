@@ -13,8 +13,8 @@ services:
             - /bin/sh
             - -c
             - |
-                mv /tmp/node_modules /nodebuild/node_modules
-                mv /tmp/yarn.lock /nodebuild/yarn.lock
+                mv /tmp/yarn.lock /nodebuild/yarn.lock -f
+                mv /tmp/node_modules /nodebuild/node_modules -f
                 nginx -g 'daemon off;'
         volumes:
             - ./nodebuild:/nodebuild
