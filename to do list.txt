@@ -7,5 +7,5 @@ Ajedrez
     - Añadir movimiento de enroque
 
 Buscaminas
-    - Empezar
+    - Minas alrededor recursivo
     
