@@ -10,6 +10,7 @@
 
 :local(.blanca),
 :local(.negra) {
+    font-family: 'cmu';
     pointer-events: none;
     user-select: none;
 }
@@ -28,4 +29,9 @@
     position: absolute;
     transition: all 750ms;
     box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'cmu';
+    src: url(./chess_merida_unicode.ttf) format('truetype');
 }
