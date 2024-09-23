@@ -1,0 +1,15 @@
+
+:local(.celda) {
+    border: 1px solid #9f9696;
+    min-height: 60px;
+    min-width: 60px;
+    text-align: center;
+    align-self: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+:local(.celda):not(:local(.descubierto)) {
+    cursor: pointer;
+    background-color: rgb(221, 210, 210);
+}

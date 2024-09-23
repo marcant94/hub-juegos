@@ -2,98 +2,128 @@ import React, { useEffect, useRef, useState } from "react";
 
 import estilos from "./TableroBuscaminas.module.css";
 import BaseAppbar from "../appbar/BaseAppbar";
-import { coloresTablero, colorTableroPredeterminado } from "../utilidades";
-
-// import ControladorTablero from "./ControladorTablero";
-
-function generarTableroVacio() {
-    let tableroVacio = [];
-
-    return tableroVacio;
-}
-
-function generarFichas() {
-    let minasIniciales = [];
-
-    return minasIniciales;
-}
+import Boton from "../elementos/Boton";
+import CeldaBuscaminas from "./CeldaBuscaminas";
 
 const TableroBuscaminas = (props) => {
-    function iniciarJuego(cargaInicial = false) {
-        let arrayFichas = null;
-        let movimientosInicial = 0;
-        
-        if (cargaInicial) {
-            // Solo cuando no es reinicio
+    function iniciarJuego() {
+        let tableroVacio = generarTablero();
 
-            const local_color_tablero = localStorage.getItem("colorTablero");
-            if (local_color_tablero) {
-                setColorTablero(local_color_tablero);
-            } else {
-                localStorage.setItem(
-                    "colorTablero",
-                    colorTableroPredeterminado
-                );
-            }
-
-            // if (local_movimientos) {
-            //     const local_fichas = JSON.parse(localStorage.getItem("fichas"));
-
-            //     arrayFichas = local_fichas;
-            //     movimientosInicial = local_movimientos;
-
-            // arrayFichas.forEach((ficha) => {
-            //     switch (ficha.nombrePieza) {
-            //         case "Alfil":
-            //             ficha.pieza = Alfil;
-            //             break;
-            //         case "Caballo":
-            //             ficha.pieza = Caballo;
-            //             break;
-            //         case "Peon":
-            //             ficha.pieza = Peon;
-            //             break;
-            //         case "Reina":
-            //             ficha.pieza = Reina;
-            //             break;
-            //         case "Rey":
-            //             ficha.pieza = Rey;
-            //             break;
-            //         case "Torre":
-            //             ficha.pieza = Torre;
-            //             break;
-            //         default:
-            //             break;
-            //     }
-            // });
-            // }
-        }
-
-        if (!arrayFichas) {
-            arrayFichas = generarFichas();
-        }
-
-        setFichas(arrayFichas);
-        setMovimientos(movimientosInicial);
-        setActivo({});
+        setTablero(tableroVacio);
+        setPartidaIniciada(false);
     }
 
-    function cambiarColorTablero(event) {
-        let nuevoValor = event.target.value;
-        setColorTablero(nuevoValor);
-        localStorage.setItem("colorTablero", nuevoValor);
+    function generarTablero() {
+        let filas = 8;
+        let columnas = 8;
+
+        let tableroVacio = [];
+        for (let i = 0; i < filas; i++) {
+            tableroVacio[i] = [];
+            for (let j = 0; j < columnas; j++) {
+                tableroVacio[i][j] = {
+                    fila: i,
+                    columna: j,
+                    tieneMina: false,
+                    minasAlrededor: 0,
+                    descubierto: false,
+                };
+            }
+        }
+
+        return tableroVacio;
+    }
+
+    function sumarMinas(tableroActual, posFila, posColumna) {
+        // A todas las celdas de alrededor sumamos una mina
+
+        for (let fila = posFila - 1; fila <= posFila + 1; fila++) {
+            for (let columna = posColumna - 1; columna <= posColumna + 1; columna++) {
+                try {
+                    tableroActual[fila][columna].minasAlrededor++;
+                } catch (error) {}
+            }
+        }
+    }
+
+    function generarMina(tableroActual, filaInicial, columnaInicial) {
+        let minaGenerada = false;
+
+        while (!minaGenerada) {
+            let posFila = Math.floor(Math.random() * tableroActual.length);
+            let posColumna = Math.floor(Math.random() * tableroActual[0].length);
+
+            let celda = tableroActual[posFila][posColumna];
+            if (celda.tieneMina) {
+                // Esta celda ya tiene mina
+                continue;
+            }
+
+            if (posFila === filaInicial && posColumna === columnaInicial) {
+                // La primera celda pulsada no puede tener minas
+                continue;
+            }
+
+            let diferenciaFila = Math.abs(filaInicial - posFila);
+            let diferenciaColumna = Math.abs(columnaInicial - posColumna);
+
+            if (diferenciaFila <= 2 && diferenciaColumna <= 2) {
+                // No puede haber minas en celdas colindantes a la inicial
+                continue;
+            }
+
+            tableroActual[posFila][posColumna].tieneMina = true;
+            sumarMinas(tableroActual, posFila, posColumna);
+            minaGenerada = true;
+        }
+    }
+
+    function repartirMinas(fila, columna) {
+        let numMinas = 10;
+
+        let tableroActual = tablero;
+        tableroActual[fila][columna].descubierto = true;
+
+        for (let i = 0; i < numMinas; i++) {
+            generarMina(tableroActual, fila, columna);
+        }
+
+        // Iniciar tiempo
+        setTablero(tableroActual);
+        setPartidaIniciada(true);
+    }
+
+    function pulsarCelda(fila, columna, evento) {
+        if (partidaIniciada) {
+            let tableroActual = tablero;
+            tableroActual[fila][columna].descubierto = true;
+            setTablero(tableroActual);
+        } else {
+            // Se reparten las minas en el primer click
+            repartirMinas(fila, columna);
+        }
+    }
+
+    function pintarColumna(celda, indice) {
+        return <CeldaBuscaminas {...celda} key={indice} funcionPulsarCelda={pulsarCelda} />;
+    }
+
+    function pintarFila(fila, indice) {
+        return (
+            <div key={indice} className={estilos.fila}>
+                {fila.map(pintarColumna)}
+            </div>
+        );
+    }
+
+    function pintarTablero() {
+        return tablero.map(pintarFila);
     }
 
     const isMounted = useRef(false);
 
-    const [tableroFichas, setTableroFichas] = useState([]);
-    const [fichas, setFichas] = useState([]);
-    const [activo, setActivo] = useState({});
-    const [movimientos, setMovimientos] = useState(0);
-
-    const [colorTablero, setColorTablero] = useState(
-        colorTableroPredeterminado
-    );
+    const [tablero, setTablero] = useState([]);
+    const [partidaIniciada, setPartidaIniciada] = useState(false);
 
     useEffect(() => {
         if (!isMounted.current) {
@@ -102,22 +132,36 @@ const TableroBuscaminas = (props) => {
 
         // Guardamos en el localstorage las minas
         // localStorage.setItem("minas", JSON.stringify(minas));
-    }, [movimientos]);
+    }, [tablero]);
 
     useEffect(() => {
         // Constructor
         isMounted.current = true;
 
-        let tableroVacio = generarTableroVacio();
-
-        setTableroFichas(tableroVacio);
         iniciarJuego(true);
     }, []);
 
     return (
         <>
-            <BaseAppbar />
-            aqui ira el buscaminas
+            <BaseAppbar
+                extra={
+                    <>
+                        <span>
+                            <b>000</b> {/* Segundos */}
+                        </span>
+
+                        <span>
+                            <b>Minas Restantes: 0</b>
+                        </span>
+
+                        <Boton desactivado={!partidaIniciada} fnClick={iniciarJuego.bind(this, false)}>
+                            Reiniciar
+                        </Boton>
+                    </>
+                }
+            />
+
+            <div className={estilos.cajaTablero}>{pintarTablero()}</div>
         </>
     );
 };

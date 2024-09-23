@@ -2,10 +2,12 @@ Ajedrez
     - Menu seleccion colores de fichas
     - Mostrar fichas comidas
     - Comprobar posible jaque en cada movimiento permitido y el ganador (No permitir jugadas ilegales)
-    - Comprobar si un jugador pierde por ahogado y el ganador
+    - Comprobar si un jugador empata por rey ahogado
+    - Añadir movimiento para coronar peón
     - Añadir movimiento de captura en paso
     - Añadir movimiento de enroque
 
 Buscaminas
-    - Minas alrededor recursivo
+    - Poder configurar dimensiones tablero y nº de minas
+    - Descubrir minas recursivo
     

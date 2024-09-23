@@ -1,0 +1,45 @@
+
+:local(.cajaTablero) {
+    background-color: white;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0 auto 3%;
+    display: block;
+}
+
+:local(.fila) {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    display: flex;
+}
+
+@media screen and (max-width: 768px) {
+    :local(.cajaTablero) {
+        scale: 75%;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    :local(.cajaTablero) {
+        scale: 65%;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    :local(.cajaTablero) {
+        scale: 55%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    :local(.cajaTablero) {
+        scale: 45%;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    :local(.cajaTablero) {
+        scale: 35%;
+    }
+}
