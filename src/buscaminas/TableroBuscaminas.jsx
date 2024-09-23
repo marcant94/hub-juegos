@@ -4,23 +4,75 @@ import estilos from "./TableroBuscaminas.module.css";
 import BaseAppbar from "../appbar/BaseAppbar";
 import Boton from "../elementos/Boton";
 import CeldaBuscaminas from "./CeldaBuscaminas";
+import { clonar } from "../utilidades";
 
 const TableroBuscaminas = (props) => {
-    function iniciarJuego() {
-        let tableroVacio = generarTablero();
+    function iniciarJuego(cargarLocalstorage = false) {
+        let tableroInicial = null;
+        let numFilasInicial = numFilas;
+        let numColumnasInicial = numColumnas;
 
-        setTablero(tableroVacio);
-        setPartidaIniciada(false);
+        if (cargarLocalstorage) {
+            numFilasInicial = parseInt(localStorage.getItem("numFilas"));
+            if (isNaN(numFilasInicial)) {
+                numFilasInicial = numFilas;
+            } else {
+                setNumFilas(numFilasInicial);
+            }
+
+            numColumnasInicial = parseInt(localStorage.getItem("numColumnas"));
+            if (isNaN(numColumnasInicial)) {
+                numColumnasInicial = numColumnas;
+            } else {
+                setNumColumnas(numColumnasInicial);
+            }
+
+            let numMinasInicial = parseInt(localStorage.getItem("numMinas"));
+            if (isNaN(numMinasInicial)) {
+                numMinasInicial = numMinas;
+            } else {
+                setNumMinas(numMinasInicial);
+            }
+
+            tableroInicial = JSON.parse(localStorage.getItem("tablero"));
+        }
+
+        if (tableroInicial === null) {
+            tableroInicial = generarTableroVacio(numFilasInicial, numColumnasInicial);
+            setPartidaIniciada(false);
+            setPartidaFinalizada(false);
+        } else {
+            comprobarTableroPrecargado(tableroInicial);
+        }
+
+        setTablero(tableroInicial);
     }
 
-    function generarTablero() {
-        let filas = 8;
-        let columnas = 8;
+    function comprobarTableroPrecargado(tableroInicial) {
+        let iniciada = false;
+        let finalizada = false;
 
+        for (let i = 0; i < numFilas; i++) {
+            for (let j = 0; j < numColumnas; j++) {
+                if (tableroInicial[i][j].descubierto) {
+                    iniciada = true;
+                    if (tableroInicial[i][j].tieneMina) {
+                        finalizada = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        setPartidaIniciada(iniciada);
+        setPartidaFinalizada(finalizada);
+    }
+
+    function generarTableroVacio(numFilasInicial, numColumnasInicial) {
         let tableroVacio = [];
-        for (let i = 0; i < filas; i++) {
+        for (let i = 0; i < numFilasInicial; i++) {
             tableroVacio[i] = [];
-            for (let j = 0; j < columnas; j++) {
+            for (let j = 0; j < numColumnasInicial; j++) {
                 tableroVacio[i][j] = {
                     fila: i,
                     columna: j,
@@ -50,8 +102,8 @@ const TableroBuscaminas = (props) => {
         let minaGenerada = false;
 
         while (!minaGenerada) {
-            let posFila = Math.floor(Math.random() * tableroActual.length);
-            let posColumna = Math.floor(Math.random() * tableroActual[0].length);
+            let posFila = Math.floor(Math.random() * numFilas);
+            let posColumna = Math.floor(Math.random() * numColumnas);
 
             let celda = tableroActual[posFila][posColumna];
             if (celda.tieneMina) {
@@ -79,29 +131,71 @@ const TableroBuscaminas = (props) => {
     }
 
     function repartirMinas(fila, columna) {
-        let numMinas = 10;
-
-        let tableroActual = tablero;
-        tableroActual[fila][columna].descubierto = true;
+        let tableroActual = clonar(tablero);
 
         for (let i = 0; i < numMinas; i++) {
             generarMina(tableroActual, fila, columna);
         }
 
         // Iniciar tiempo
-        setTablero(tableroActual);
         setPartidaIniciada(true);
+
+        return tableroActual;
+    }
+
+    function descubrirRecursivo(tableroActual, posFila, posColumna) {
+        if (tableroActual[posFila][posColumna].minasAlrededor > 0) {
+            return;
+        }
+
+        for (let fila = posFila - 1; fila <= posFila + 1; fila++) {
+            for (let columna = posColumna - 1; columna <= posColumna + 1; columna++) {
+                try {
+                    let celda = tableroActual[fila][columna];
+                    if (!celda.descubierto) {
+                        celda.descubierto = true;
+                        descubrirRecursivo(tableroActual, fila, columna);
+                    }
+                } catch (error) {}
+            }
+        }
+    }
+
+    function finalizarPartida(tableroActual) {
+        for (let i = 0; i < numFilas; i++) {
+            for (let j = 0; j < numColumnas; j++) {
+                tableroActual[i][j].descubierto = true;
+            }
+        }
+
+        setPartidaFinalizada(true);
+        return tableroActual;
     }
 
     function pulsarCelda(fila, columna, evento) {
+        evento.preventDefault();
+        evento.stopPropagation();
+
+        if (partidaFinalizada) {
+            return;
+        }
+
+        let tableroActual = undefined;
         if (partidaIniciada) {
-            let tableroActual = tablero;
-            tableroActual[fila][columna].descubierto = true;
-            setTablero(tableroActual);
+            tableroActual = clonar(tablero);
         } else {
             // Se reparten las minas en el primer click
-            repartirMinas(fila, columna);
+            tableroActual = repartirMinas(fila, columna);
         }
+
+        tableroActual[fila][columna].descubierto = true;
+        descubrirRecursivo(tableroActual, fila, columna);
+
+        if (tableroActual[fila][columna].tieneMina) {
+            tableroActual = finalizarPartida(tableroActual);
+        }
+
+        setTablero(tableroActual);
     }
 
     function pintarColumna(celda, indice) {
@@ -124,14 +218,23 @@ const TableroBuscaminas = (props) => {
 
     const [tablero, setTablero] = useState([]);
     const [partidaIniciada, setPartidaIniciada] = useState(false);
+    const [partidaFinalizada, setPartidaFinalizada] = useState(false);
+    const [numFilas, setNumFilas] = useState(8);
+    const [numColumnas, setNumColumnas] = useState(8);
+    const [numMinas, setNumMinas] = useState(10);
 
     useEffect(() => {
         if (!isMounted.current) {
             return;
         }
 
-        // Guardamos en el localstorage las minas
-        // localStorage.setItem("minas", JSON.stringify(minas));
+        // Guardamos en el localstorage la configuracion
+        localStorage.setItem("numFilas", JSON.stringify(numFilas));
+        localStorage.setItem("numColumnas", JSON.stringify(numColumnas));
+        localStorage.setItem("numMinas", JSON.stringify(numMinas));
+
+        // Guardamos en el localstorage la partida
+        localStorage.setItem("tablero", JSON.stringify(tablero));
     }, [tablero]);
 
     useEffect(() => {
@@ -161,7 +264,7 @@ const TableroBuscaminas = (props) => {
                 }
             />
 
-            <div className={estilos.cajaTablero}>{pintarTablero()}</div>
+            <div className={estilos.cajaTablero + " facil"}>{pintarTablero()}</div>
         </>
     );
 };

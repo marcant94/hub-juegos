@@ -1,9 +1,7 @@
 
 :local(.cajaTablero) {
     background-color: white;
-    border-radius: 15px;
     width: 100%;
-    margin: 0 auto 3%;
     display: block;
 }
 
@@ -12,6 +10,7 @@
     font-weight: bold;
     font-size: 1.5rem;
     display: flex;
+    width: 100%;
 }
 
 @media screen and (max-width: 768px) {
