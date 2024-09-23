@@ -1,15 +1,59 @@
 
 :local(.celda) {
     border: 1px solid #9f9696;
-    min-height: 60px;
-    min-width: 60px;
+    width: auto;
     text-align: center;
     align-self: center;
     font-weight: bold;
     font-size: 1.5rem;
 }
 
+:global(.facil) :local(.celda) {
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+}
+
 :local(.celda):not(:local(.descubierto)) {
     cursor: pointer;
     background-color: rgb(221, 210, 210);
+}
+
+:local(.mina) {
+    font-size: 2rem;
+    color: black;
+    font-weight: bolder;
+    background-color: red;
+}
+
+:local(.uno) {
+    color: blue;
+}
+
+:local(.dos) {
+    color: green;
+}
+
+:local(.tres) {
+    color: red;
+}
+
+:local(.cuatro) {
+    color: darkblue;
+}
+
+:local(.cinco) {
+    color: brown;
+}
+
+:local(.seis) {
+    color: cyan;
+}
+
+:local(.siete) {
+    color: black;
+}
+
+:local(.ocho) {
+    color: Grey;
 }
