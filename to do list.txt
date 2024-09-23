@@ -8,6 +8,10 @@ Ajedrez
     - Añadir movimiento de enroque
 
 Buscaminas
-    - Poder configurar dimensiones tablero y nº de minas
-    - Descubrir minas recursivo
-    
+    - Poder colocar banderas y actualizar contador de minas restantes
+    - Persistir las banderas colocadas
+    - Detectar si se ha ganado (cuando se han revelado todas las celdas sin minas)
+    - Poder configurar dimensiones tablero y nº de minas por dificultad
+    - Contador de tiempo
+    - Registrar mejores tiempos
+    - Configurar por idiomas
