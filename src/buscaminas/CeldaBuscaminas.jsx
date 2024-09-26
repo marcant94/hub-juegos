@@ -2,11 +2,11 @@ import React from "react";
 
 import estilos from "./CeldaBuscaminas.module.css";
 
-const CeldaBuscaminas = ({ fila, columna, tieneMina = false, minasAlrededor = 0, descubierto = false, funcionPulsarCelda }) => {
+const CeldaBuscaminas = ({ fila, columna, tieneMina = false, minasAlrededor = 0, descubierto = false, partidaFinalizada = false, funcionPulsarCelda }) => {
     let textoMostrar = "";
     let claseColor = "";
 
-    if (descubierto) {
+    if (descubierto || partidaFinalizada) {
         if (tieneMina) {
             textoMostrar = "*";
         } else {
@@ -47,7 +47,19 @@ const CeldaBuscaminas = ({ fila, columna, tieneMina = false, minasAlrededor = 0,
 
     return (
         <div
-            className={estilos.celda + " " + (tieneMina ? estilos.mina : "") + " " + (descubierto ? estilos.descubierto : "") + " " + claseColor}
+            className={
+                estilos.celda +
+                " " +
+                (tieneMina ? estilos.mina : "") +
+                " " +
+                (descubierto ? estilos.descubierto : "") +
+                " " +
+                (partidaFinalizada ? estilos.finalizado : "") +
+                " " +
+                (tieneMina && descubierto ? estilos.error : "") +
+                " " +
+                claseColor
+            }
             onClick={funcionPulsarCelda.bind(this, fila, columna)}
             onAuxClick={funcionPulsarCelda.bind(this, fila, columna)}
         >

@@ -161,17 +161,6 @@ const TableroBuscaminas = (props) => {
         }
     }
 
-    function finalizarPartida(tableroActual) {
-        for (let i = 0; i < numFilas; i++) {
-            for (let j = 0; j < numColumnas; j++) {
-                tableroActual[i][j].descubierto = true;
-            }
-        }
-
-        setPartidaFinalizada(true);
-        return tableroActual;
-    }
-
     function pulsarCelda(fila, columna, evento) {
         evento.preventDefault();
         evento.stopPropagation();
@@ -192,14 +181,14 @@ const TableroBuscaminas = (props) => {
         descubrirRecursivo(tableroActual, fila, columna);
 
         if (tableroActual[fila][columna].tieneMina) {
-            tableroActual = finalizarPartida(tableroActual);
+            setPartidaFinalizada(true);
         }
 
         setTablero(tableroActual);
     }
 
     function pintarColumna(celda, indice) {
-        return <CeldaBuscaminas {...celda} key={indice} funcionPulsarCelda={pulsarCelda} />;
+        return <CeldaBuscaminas {...celda} key={indice} funcionPulsarCelda={pulsarCelda} partidaFinalizada={partidaFinalizada} />;
     }
 
     function pintarFila(fila, indice) {

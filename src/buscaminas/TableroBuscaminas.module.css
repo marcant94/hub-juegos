@@ -15,30 +15,30 @@
 
 @media screen and (max-width: 768px) {
     :local(.cajaTablero) {
-        scale: 75%;
+        scale: 85%;
     }
 }
 
 @media screen and (max-width: 520px) {
     :local(.cajaTablero) {
-        scale: 65%;
+        scale: 75%;
     }
 }
 
 @media screen and (max-width: 470px) {
     :local(.cajaTablero) {
-        scale: 55%;
+        scale: 65%;
     }
 }
 
 @media screen and (max-width: 400px) {
     :local(.cajaTablero) {
-        scale: 45%;
+        scale: 55%;
     }
 }
 
 @media screen and (max-width: 300px) {
     :local(.cajaTablero) {
-        scale: 35%;
+        scale: 45%;
     }
 }
