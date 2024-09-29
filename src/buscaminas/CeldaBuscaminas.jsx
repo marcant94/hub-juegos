@@ -50,7 +50,7 @@ const CeldaBuscaminas = ({ fila, columna, tieneMina = false, minasAlrededor = 0,
             className={
                 estilos.celda +
                 " " +
-                (tieneMina ? estilos.mina : "") +
+                (tieneMina && descubierto ? estilos.mina : "") +
                 " " +
                 (descubierto ? estilos.descubierto : "") +
                 " " +

@@ -1,17 +1,19 @@
 
 :local(.celda) {
-    border: 1px solid #9f9696;
     width: auto;
     text-align: center;
     align-self: center;
     font-weight: bold;
     font-size: 1.5rem;
-    box-shadow: 0px 0px 2px 0px rgb(53, 53, 53);
-    margin: 1px;
-    border-radius: 5px;
     cursor: pointer;
+    box-sizing: border-box;
+    background-color: #c6c6c6;
 
-    transition: all 0.3s ease-in-out;
+    /* margin: 1px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px 0px rgb(53, 53, 53); */
+
+    transition: border 0.15s ease-in-out;
 }
 
 :global(.facil) :local(.celda) {
@@ -24,24 +26,31 @@
     background-color: red !important;
 }
 
-:local(.celda):local(.descubierto) {
-    background-color: #f0f0f0;
+:local(.mina):local(.descubierto),
+:local(.mina):local(.finalizado) {
+    font-size: 2rem;
+    color: black;
+    font-weight: bolder;
+    background-color: red;
 }
 
-:local(.celda):not(:local(.finalizado)) {
-    background-color: #cdcbcb;
+:local(.celda):local(.descubierto) {
+    border: 2px solid #807c7c;
+}
+
+:local(.celda):not(:local(.descubierto)) {
+    border-style: outset;
+    border-width: 6px;
+
+    border-top-color: white;
+    border-left-color: white;
+    border-bottom-color: silver;
+    border-right-color: silver;
 }
 
 :local(.celda):local(.descubierto),
 :local(.celda):local(.finalizado) {
     cursor: not-allowed;
-}
-
-:local(.mina) {
-    font-size: 2rem;
-    color: black;
-    font-weight: bolder;
-    background-color: red;
 }
 
 :local(.uno) {
