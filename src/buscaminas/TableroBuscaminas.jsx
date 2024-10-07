@@ -76,9 +76,10 @@ const TableroBuscaminas = (props) => {
                 tableroVacio[i][j] = {
                     fila: i,
                     columna: j,
-                    tieneMina: false,
                     minasAlrededor: 0,
+                    tieneMina: false,
                     descubierto: false,
+                    bandera: false
                 };
             }
         }
@@ -169,6 +170,10 @@ const TableroBuscaminas = (props) => {
             return;
         }
 
+        if (tablero[fila][columna].bandera) {
+            return;
+        }
+        
         let tableroActual = undefined;
         if (partidaIniciada) {
             tableroActual = clonar(tablero);
@@ -187,8 +192,30 @@ const TableroBuscaminas = (props) => {
         setTablero(tableroActual);
     }
 
+    function pulsarSecundarioCelda(fila, columna, evento) {
+        evento.preventDefault();
+        evento.stopPropagation();
+
+        if (partidaFinalizada) {
+            return;
+        }
+
+        if (!partidaIniciada) {
+            return;
+        }
+        
+        if (tablero[fila][columna].descubierto) {
+            return;
+        }
+        
+        let tableroActual = clonar(tablero);
+        tableroActual[fila][columna].bandera = !tableroActual[fila][columna].bandera;
+        
+        setTablero(tableroActual);
+    }
+
     function pintarColumna(celda, indice) {
-        return <CeldaBuscaminas {...celda} key={indice} funcionPulsarCelda={pulsarCelda} partidaFinalizada={partidaFinalizada} />;
+        return <CeldaBuscaminas {...celda} key={indice} funcionPulsarCelda={pulsarCelda} funcionPulsarSecundario={pulsarSecundarioCelda} partidaFinalizada={partidaFinalizada} />;
     }
 
     function pintarFila(fila, indice) {

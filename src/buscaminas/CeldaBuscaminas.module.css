@@ -26,11 +26,14 @@
     background-color: red !important;
 }
 
-:local(.mina):local(.descubierto),
-:local(.mina):local(.finalizado) {
-    font-size: 2rem;
-    color: black;
-    font-weight: bolder;
+:local(.mina),
+:local(.bandera) {
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+}
+
+:local(.celdaMina):local(.descubierto) {
     background-color: red;
 }
 

@@ -2,13 +2,28 @@ import React from "react";
 
 import estilos from "./CeldaBuscaminas.module.css";
 
-const CeldaBuscaminas = ({ fila, columna, tieneMina = false, minasAlrededor = 0, descubierto = false, partidaFinalizada = false, funcionPulsarCelda }) => {
+import flag from "./flag.ico";
+import mine from "./mine.ico";
+
+const CeldaBuscaminas = ({
+    fila,
+    columna,
+    minasAlrededor = 0,
+    tieneMina = false,
+    descubierto = false,
+    bandera = false,
+    partidaFinalizada = false,
+    funcionPulsarCelda,
+    funcionPulsarSecundario
+}) => {
     let textoMostrar = "";
     let claseColor = "";
 
-    if (descubierto || partidaFinalizada) {
+    if (bandera) {
+        textoMostrar = <img className={estilos.bandera} src={flag} alt="Flag" />;
+    } else if (descubierto || partidaFinalizada) {
         if (tieneMina) {
-            textoMostrar = "*";
+            textoMostrar = <img className={estilos.mina} src={mine} alt="Mine" />;
         } else {
             textoMostrar = minasAlrededor;
 
@@ -50,18 +65,18 @@ const CeldaBuscaminas = ({ fila, columna, tieneMina = false, minasAlrededor = 0,
             className={
                 estilos.celda +
                 " " +
-                (tieneMina && descubierto ? estilos.mina : "") +
+                (tieneMina && descubierto ? estilos.celdaMina : "") +
                 " " +
                 (descubierto ? estilos.descubierto : "") +
                 " " +
                 (partidaFinalizada ? estilos.finalizado : "") +
                 " " +
-                (tieneMina && descubierto ? estilos.error : "") +
+                ((tieneMina && descubierto) || (!tieneMina && bandera && partidaFinalizada) ? estilos.error : "") +
                 " " +
                 claseColor
             }
             onClick={funcionPulsarCelda.bind(this, fila, columna)}
-            onAuxClick={funcionPulsarCelda.bind(this, fila, columna)}
+            onContextMenu={funcionPulsarSecundario.bind(this, fila, columna)}
         >
             {textoMostrar}
         </div>
