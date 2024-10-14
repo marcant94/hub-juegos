@@ -6,6 +6,7 @@ Ajedrez
     - Añadir movimiento para coronar peón
     - Añadir movimiento de captura en paso
     - Añadir movimiento de enroque
+    - Jaque descubierto??
 
 Buscaminas
     - Poder colocar banderas y actualizar contador de minas restantes
