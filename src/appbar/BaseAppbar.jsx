@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
-// import packageJson from "../package.json" assert { type: "json" };
-import packageJson from "../../package.json";
+// La version empaquetada la inyecta esbuild desde src/scripts/esbuild-config.js
+// (package.json + contador de commits), igual que meta.json
+const versionApp = typeof __VERSION_APP__ !== "undefined" ? __VERSION_APP__ : "0.0.0";
 
 import estilos from "./BaseAppbar.module.css";
 import { dameUrlBase, semverGreaterThan } from "../utilidades";
@@ -26,7 +27,7 @@ const BaseAppbar = props => {
             setUltimaVersion(latestVersion);
             static_ultima_version = latestVersion;
 
-            let hayActualizacion = semverGreaterThan(latestVersion, packageJson.version);
+            let hayActualizacion = semverGreaterThan(latestVersion, versionApp);
             setHayActualizacion(hayActualizacion);
 
             static_hay_actualizacion = hayActualizacion;
@@ -57,10 +58,10 @@ const BaseAppbar = props => {
 
             {props.extra ? props.extra : undefined}
 
-            {!hayActualizacion && <div>v{packageJson.version}</div>}
+            {!hayActualizacion && <div>v{versionApp}</div>}
             {hayActualizacion && (
                 <div>
-                    <span className={estilos.versionAnterior}>v{packageJson.version}</span>
+                    <span className={estilos.versionAnterior}>v{versionApp}</span>
                     &nbsp;-&nbsp;
                     <span className={estilos.versionNueva}>v{ultimaVersion}</span>
                 </div>

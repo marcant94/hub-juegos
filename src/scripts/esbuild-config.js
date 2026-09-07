@@ -1,4 +1,18 @@
 import cssModulesPlugin from "esbuild-css-modules-plugin";
+import { execSync } from "child_process";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const packageJson = require("../../package.json");
+
+// Contador de commits para que la version empaquetada coincida con la de meta.json
+let numCommits;
+try {
+    numCommits = parseInt(execSync("git rev-list --count HEAD", { encoding: "utf8" }).trim(), 10);
+} catch (error) {
+    numCommits = undefined;
+}
+const versionApp = numCommits !== undefined ? `${packageJson.version}.${numCommits}` : packageJson.version;
 
 const isDev = process.argv[1].includes("dev.js");
 
@@ -20,7 +34,10 @@ const buildParams = {
     color: true,
     entryPoints: ["src/index.jsx"],
     loader: { ".png": "file", ".ico": "file", ".svg": "file", ".ttf": "file", },
-    define: clientEnv,
+    define: {
+        __VERSION_APP__: JSON.stringify(versionApp),
+        ...clientEnv,
+    },
     outdir: isDev ? carpetaDev : carpetaProd,
     minify: !isDev,
     // format: "cjs",
