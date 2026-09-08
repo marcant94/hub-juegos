@@ -12,7 +12,7 @@ try {
     numCommits = undefined;
 }
 
-const version = numCommits !== undefined ? String(numCommits) : "0";
+const version = numCommits !== undefined ? numCommits : 0;
 
 const jsonData = {
     version: version
