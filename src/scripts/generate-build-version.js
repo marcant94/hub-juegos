@@ -1,23 +1,18 @@
 /* generate-build-version.js */
 import fs from "fs";
 import { execSync } from "child_process";
-import { createRequire } from "module";
 
-const require = createRequire(import.meta.url);
-const packageJson = require("../../package.json");
-
-// La version es la del package.json con el numero de commits como cuarto componente,
-// p. ej. "0.5.7" + 120 commits -> "0.5.7.120". El contador sube solo en cada build,
-// asi nadie tiene que acordarse de subir el numero a mano.
+// La version es simplemente el numero de commits, p. ej. 120. Sube solo en cada
+// build, asi nadie tiene que acordarse de subir el numero a mano.
 let numCommits;
 try {
     numCommits = parseInt(execSync("git rev-list --count HEAD", { encoding: "utf8" }).trim(), 10);
 } catch (error) {
-    console.log("No se pudo obtener el numero de commits de git, se omite el contador:", error.message);
+    console.log("No se pudo obtener el numero de commits de git:", error.message);
     numCommits = undefined;
 }
 
-const version = numCommits !== undefined ? `${packageJson.version}.${numCommits}` : packageJson.version;
+const version = numCommits !== undefined ? String(numCommits) : "0";
 
 const jsonData = {
     version: version

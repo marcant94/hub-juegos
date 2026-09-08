@@ -1,18 +1,14 @@
 import cssModulesPlugin from "esbuild-css-modules-plugin";
 import { execSync } from "child_process";
-import { createRequire } from "module";
 
-const require = createRequire(import.meta.url);
-const packageJson = require("../../package.json");
-
-// Contador de commits para que la version empaquetada coincida con la de meta.json
+// La version es el numero de commits, igual que en generate-build-version.js
 let numCommits;
 try {
     numCommits = parseInt(execSync("git rev-list --count HEAD", { encoding: "utf8" }).trim(), 10);
 } catch (error) {
     numCommits = undefined;
 }
-const versionApp = numCommits !== undefined ? `${packageJson.version}.${numCommits}` : packageJson.version;
+const versionApp = numCommits !== undefined ? String(numCommits) : "0";
 
 const isDev = process.argv[1].includes("dev.js");
 
