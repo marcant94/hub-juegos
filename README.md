@@ -5,8 +5,9 @@ Colección de juegos web en React: **ajedrez** y **buscaminas**. Construida con 
 ## Stack
 
 - [React 18](https://react.dev/) + CSS Modules
-- [esbuild](https://esbuild.github.io/) para bundling; `live-server` + `chokidar` para el servidor de desarrollo con recarga
-- [pnpm](https://pnpm.io/) como gestor de paquetes (lockfile: `pnpm-lock.yaml`). No se fija versión en `packageManager`: cada desarrollador usa la suya, aunque conviene mantenerla reciente para que el lockfile sea compatible
+- [esbuild](https://esbuild.github.io/) v0.28 para bundling y servidor de desarrollo (watch + live-reload nativo)
+- [pnpm](https://pnpm.io/) como gestor de paquetes. No se versiona el lockfile (`pnpm-lock.yaml` está en `.gitignore`); en CI se instalan solo dependencias de producción con `pnpm install --prod`
+- Dependencias fijadas con `~` (solo patch updates, sin saltos de minor)
 - Enrutado propio sin librerías: `src/elementos/ProveedorRuta.jsx` envuelve `window.location` y `popstate`
 
 ## Requisitos
@@ -23,7 +24,7 @@ pnpm install
 pnpm dev        # http://localhost:4000 (también imprime URLs de red)
 ```
 
-El script `dev` limpia la carpeta `.dev`, copia `public/`, arranca live-server con recarga y recompila al cambiar archivos.
+El script `dev` limpia la carpeta `dist/`, copia `public/`, arranca un servidor HTTP nativo con MIME types correctos para ES modules, y usa `ctx.watch()` de esbuild para recompilar al cambiar archivos en `src/` o `public/`.
 
 ## Build de producción
 
@@ -37,7 +38,7 @@ Antes de compilar, `prebuild` ejecuta `generate-build-version.js` que inyecta la
 
 El despliegue lo hace [GitHub Actions](https://docs.github.com/en/pages) con el workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml):
 
-1. Job `build` en `ubuntu-latest`: pnpm 11 + Node 24, `pnpm install --frozen-lockfile` y `pnpm build`.
+1. Job `build` en `ubuntu-latest`: pnpm 11 + Node 24, `pnpm install --prod` y `pnpm build`.
 2. Copia `build/` a `_site/` y lo sube como artefacto de Pages.
 3. Job `deploy` publica `_site/` en GitHub Pages.
 
@@ -49,7 +50,7 @@ Se activa en push a `prod` (o manualmente desde la pestaña Actions). En el repo
 
 | Script | Descripción |
 |---|---|
-| `pnpm dev` | Servidor de desarrollo con live-reload en el puerto 4000 |
+| `pnpm dev` | Servidor de desarrollo con live-reload en el puerto 4000 (HTTP nativo + esbuild watch) |
 | `pnpm build` | Compila la app a `./build` (ejecuta `prebuild` antes) |
 | `pnpm lint` | ESLint sobre `src/**` con `--max-warnings=0` |
 | `pnpm format` | Prettier sobre todo el código fuente |

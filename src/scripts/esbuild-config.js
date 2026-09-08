@@ -35,6 +35,7 @@ const buildParams = {
         ...clientEnv,
     },
     outdir: isDev ? carpetaDev : carpetaProd,
+    outbase: "src",
     minify: !isDev,
     // format: "cjs",
     format: "esm",

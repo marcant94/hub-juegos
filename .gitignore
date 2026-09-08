@@ -25,5 +25,5 @@ yarn-error.log*
 
 package-lock.json
 yarn.lock
-# *-lock.yaml  (los lockfiles se versionan: determinismo en CI)
+*-lock.yaml
 bun.lockb

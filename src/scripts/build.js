@@ -1,39 +1,30 @@
+import { existsSync, rmSync, cpSync, readFileSync, writeFileSync } from "fs";
 import esbuild from "esbuild";
-import fse from "fs-extra";
 import { buildParams, carpetaProd } from "./esbuild-config.js";
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 const packageJson = require("../../package.json");
 
-
 const build = async () => {
-    if (fse.existsSync(carpetaProd)) {
-        await fse.rm(carpetaProd, { recursive: true });
+    if (existsSync(carpetaProd)) {
+        rmSync(carpetaProd, { recursive: true });
     }
 
     // Copiamos la carpeta public a la carpeta del build
-    await fse.copy("./public", carpetaProd);
-    
-    // Insertamos en el index.html la versión
-    fse.readFile(carpetaProd + "/index.html", "utf8", function(err, data) {
-        if (err) {
-            return console.log("Error al leer index.html", err);
-        }
+    cpSync("./public", carpetaProd, { recursive: true });
 
-        data = data.replaceAll("index.js", "index.js?v=" + packageJson.version);
-        data = data.replaceAll("index.css", "index.css?v=" + packageJson.version);
-        
-        fse.writeFile(carpetaProd + "/index.html", data, "utf8", function(err) {
-            if (err) return console.log("Error al escribir el index.html", err);
-        });
-    });
-    
+    // Insertamos en el index.html la version
+    const indexPath = carpetaProd + "/index.html";
+    let data = readFileSync(indexPath, "utf8");
+    data = data.replaceAll("index.js", "index.js?v=" + packageJson.version);
+    data = data.replaceAll("index.css", "index.css?v=" + packageJson.version);
+    writeFileSync(indexPath, data, "utf8");
+
     console.log(`⚡ [esbuild] Building..`);
-    // Run build
     const ctx = await esbuild.context(buildParams);
     await ctx.rebuild();
-    await ctx.dispose(); // To free resources
+    await ctx.dispose();
 };
 
 build();

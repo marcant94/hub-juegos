@@ -32,10 +32,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: pnpm
+
+      - name: Cachear pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-store-
+
+      - name: Limpiar store
+        run: pnpm store prune
 
       - name: Instalar dependencias
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --prod
 
       - name: Compilar
         run: pnpm build

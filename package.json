@@ -1,14 +1,13 @@
 {
-    "name": "ajedrez-react",
+    "name": "hub-juegos",
     "version": "1.0.0",
     "private": true,
     "type": "module",
     "dependencies": {
-        "esbuild": "^0.17.19",
-        "esbuild-css-modules-plugin": "^2.6.2",
-        "fs-extra": "^10.1.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "esbuild": "~0.28.2",
+        "esbuild-css-modules-plugin": "~3.1.5",
+        "react": "~18.2.0",
+        "react-dom": "~18.2.0"
     },
     "lint-staged": {
         "src/**/*.{js,jsx,json,css}": [
@@ -37,12 +36,7 @@
         "setupTestFrameworkScriptFile": "<rootDir>/src/prepararJest.js"
     },
     "devDependencies": {
-        "chokidar": "^3.5.3",
-        "live-server": "^1.2.2",
-        "prettier": "^1.16.4"
-    },
-    "overrides": {
-        "chokidar": "^3.5.3"
+        "prettier": "~1.16.4"
     },
     "browserslist": [
         ">0.2%",
