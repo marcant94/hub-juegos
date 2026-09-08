@@ -20,8 +20,8 @@ No se usa Docker: todo corre con Node directamente.
 ## Desarrollo
 
 ```bash
-pnpm install
-pnpm dev        # http://localhost:4000 (también imprime URLs de red)
+pnpm i           # alias corto de pnpm install
+pnpm dev         # http://localhost:4000 (también imprime URLs de red)
 ```
 
 El script `dev` limpia la carpeta `dist/`, copia `public/`, arranca un servidor HTTP nativo con MIME types correctos para ES modules, y usa `ctx.watch()` de esbuild para recompilar al cambiar archivos en `src/` o `public/`.
@@ -54,6 +54,14 @@ Se activa en push a `prod` (o manualmente desde la pestaña Actions). En el repo
 | `pnpm build` | Compila la app a `./build` (ejecuta `prebuild` antes) |
 | `pnpm lint` | ESLint sobre `src/**` con `--max-warnings=0` |
 | `pnpm format` | Prettier sobre todo el código fuente |
+
+## Limpieza
+
+```bash
+pnpm store prune   # elimina paquetes huérfanos del store global de pnpm
+```
+
+El store de pnpm es un almacén centralizado de paquetes descargados (en `~/.local/share/pnpm/store`). Cuando actualizas o eliminas dependencias, las versiones viejas quedan en el store sin usarse. `prune` las limpia para recuperar espacio. No afecta a `node_modules` ni al proyecto — solo al cache global.
 
 ## Estructura
 
