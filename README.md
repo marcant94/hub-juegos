@@ -11,8 +11,8 @@ Colección de juegos web en React: **ajedrez** y **buscaminas**. Construida con 
 
 ## Requisitos
 
-- Node.js ≥ 20 (la versión usada por el pipeline)
-- pnpm (`npm install -g pnpm` o `corepack enable && corepack prepare pnpm@latest --activate`)
+- Node.js ≥ 22 (la versión usada por el pipeline)
+- pnpm ≥ 10 (`npm install -g pnpm` o `corepack enable && corepack prepare pnpm@latest --activate`)
 
 No se usa Docker: todo corre con Node directamente.
 
@@ -37,7 +37,7 @@ Antes de compilar, `prebuild` ejecuta `generate-build-version.js` que inyecta la
 
 El despliegue lo hace [GitHub Actions](https://docs.github.com/en/pages) con el workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml):
 
-1. Job `build` en `ubuntu-latest`: pnpm 9 + Node 20, `pnpm install --frozen-lockfile` y `pnpm build`.
+1. Job `build` en `ubuntu-latest`: pnpm 11 + Node 22, `pnpm install --frozen-lockfile` y `pnpm build`.
 2. Copia `build/` a `_site/` y lo sube como artefacto de Pages.
 3. Job `deploy` publica `_site/` en GitHub Pages.
 
