@@ -23,7 +23,7 @@ const BaseAppbar = props => {
 
         if (response.status >= 200 && response.status < 300) {
             const meta = await response.json();
-            const latestVersion = meta.version;
+            const latestVersion = String(meta.version);
             setUltimaVersion(latestVersion);
             static_ultima_version = latestVersion;
 
